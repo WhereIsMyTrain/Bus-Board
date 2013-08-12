@@ -4,5 +4,18 @@
     <string name="app_name">Busboard</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="from">from</string>
+    <string name="to">to</string>
+    <string name="hint_from">Where are you now?</string>
+    <string name="hint_to">Where are you going to?</string>
+    <string name="depart_now_hint">Do you want to leave now?</string>
+    <string name="depart_button_text">Depart ASAP</string>
+    <string name="leave_after_hint">Leave After</string>
+    <string name="arrive_before_hint">Arrive Before</string>
+    <string name="history_label">History</string>
+    <string name="title_activity_directions">Directions</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_status">Status</string>
+    <string name="title_activity_statistics">Statistics</string>
 
 </resources>
