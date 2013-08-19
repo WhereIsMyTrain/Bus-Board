@@ -22,6 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.whereismytrain.busboard.Directions"
+            android:label="@string/title_activity_directions" >
+        </activity>
+        <activity
+            android:name="com.whereismytrain.busboard.Map"
+            android:label="@string/title_activity_map" >
+        </activity>
+        <activity
+            android:name="com.whereismytrain.busboard.Status"
+            android:label="@string/title_activity_status" >
+        </activity>
+        <activity
+            android:name="com.whereismytrain.busboard.Statistics"
+            android:label="@string/title_activity_statistics" >
+        </activity>
     </application>
 
 </manifest>
