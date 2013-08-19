@@ -1,4 +1,6 @@
-package com.whereismytrain.busboard;
+package com.whereismytrain.transitboard;
+
+import com.whereismytrain.transitboard.R;
 
 import android.os.Bundle;
 import android.app.Activity;

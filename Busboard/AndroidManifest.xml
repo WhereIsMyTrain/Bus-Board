@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.whereismytrain.busboard.HomeScreen"
+            android:name="com.whereismytrain.transitboard.HomeScreen"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,19 +23,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.whereismytrain.busboard.Directions"
+            android:name="com.whereismytrain.transitboard.Directions"
             android:label="@string/title_activity_directions" >
         </activity>
         <activity
-            android:name="com.whereismytrain.busboard.Map"
+            android:name="com.whereismytrain.transitboard.Map"
             android:label="@string/title_activity_map" >
         </activity>
         <activity
-            android:name="com.whereismytrain.busboard.Status"
+            android:name="com.whereismytrain.transitboard.Status"
             android:label="@string/title_activity_status" >
         </activity>
         <activity
-            android:name="com.whereismytrain.busboard.Statistics"
+            android:name="com.whereismytrain.transitboard.Statistics"
             android:label="@string/title_activity_statistics" >
         </activity>
     </application>

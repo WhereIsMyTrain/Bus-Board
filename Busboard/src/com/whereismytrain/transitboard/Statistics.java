@@ -1,21 +1,23 @@
-package com.whereismytrain.busboard;
+package com.whereismytrain.transitboard;
+
+import com.whereismytrain.transitboard.R;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
-public class Status extends Activity {
+public class Statistics extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_status);
+		setContentView(R.layout.activity_statistics);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.status, menu);
+		getMenuInflater().inflate(R.menu.statistics, menu);
 		return true;
 	}
 
