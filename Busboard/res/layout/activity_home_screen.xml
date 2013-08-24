@@ -35,6 +35,7 @@
         android:layout_marginTop="8dp"
         android:hint="@string/depart_now_hint"
         android:text="@string/depart_button_text"
+        android:onClick="mapScreen"
         android:textSize="12sp" />
 
     <TextView
