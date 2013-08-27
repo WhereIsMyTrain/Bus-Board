@@ -8,7 +8,9 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import com.google.android.gms.maps.*;
@@ -85,7 +87,10 @@ public class Map extends FragmentActivity {
 	protected void findNearestBusLocations(LatLng myLatLng) {
 		
 	}
-    
+	public void openDirections(View view) {
+		Intent i = new Intent(this, Directions.class);
+		 startActivity(i);
+	}
 	
 
 
