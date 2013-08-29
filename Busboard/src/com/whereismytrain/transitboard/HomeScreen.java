@@ -36,6 +36,7 @@ import android.util.Log;
 
 public class HomeScreen extends Activity {
 
+	//JSON Parser should spurt something like this out:
 	public static Object[][] busstops = {
 		{1882, "UQ Lakes station", -27.49805, 153.018077 , 2, "http://translink.com.au/stop/001882"},
 		{1801,"UQ Chancellor's Place", -27.498448, 153.011036, 2, "http://translink.com.au/stop/001801"}
@@ -46,7 +47,8 @@ public class HomeScreen extends Activity {
 		setContentView(R.layout.activity_home_screen);
 		TextView or = (TextView)findViewById(R.id.Or);
 		
-		
+		//dynamic binding here
+		//harcoded binding
 		Spinner from = (Spinner)findViewById(R.id.From);
 		List<String> list = new ArrayList<String>();
 		list.add("From: " + busstops[0][1].toString());
@@ -66,7 +68,7 @@ public class HomeScreen extends Activity {
 		time.setAdapter(adapterTime);
 		
 		
-		
+		//JSON Parsing
 		String[] location;
 		String suburb;
 		JSONParser parser = new JSONParser();
@@ -96,6 +98,7 @@ public class HomeScreen extends Activity {
 		return true;
 		
 	}
+	//open map
 	public void mapScreen(View view) {
 		Intent i = new Intent(this, Map.class);
 		 startActivity(i);

@@ -7,16 +7,12 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class Map extends FragmentActivity {
@@ -38,6 +34,7 @@ public class Map extends FragmentActivity {
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
+		//find the map fragment
 		SupportMapFragment fm = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
 		map = fm.getMap();
 		map.setMyLocationEnabled(true);
@@ -76,7 +73,7 @@ public class Map extends FragmentActivity {
 	        //map.addMarker(new MarkerOptions().position(myPosition).title("Nearest Busstop: " + results[0] + "m"));
         }
 		
-		// Move the camera instantly to hamburg with a zoom of 15.
+		// Move the camera instantly to my position with a zoom of 15.
 	    map.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 15));
 
 	    // Zoom in, animating the camera.
@@ -87,6 +84,7 @@ public class Map extends FragmentActivity {
 	protected void findNearestBusLocations(LatLng myLatLng) {
 		
 	}
+	//Open the directions screen
 	public void openDirections(View view) {
 		Intent i = new Intent(this, Directions.class);
 		 startActivity(i);

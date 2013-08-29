@@ -20,13 +20,15 @@ public class Directions extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_directions);
-		
+		//JSON stub here
+		//hardcoded directions
 		ListView directions = (ListView)findViewById(R.id.directions);
 		List<String> list = new ArrayList<String>();
 		list.add("Walk 315m to UQ Chancellor's Place, zone D");
 		list.add("Catch express bus to Benson St at Toowong, stop 14 ");
 		list.add("Walk 153m to Toowong station, platform 2");
 		list.add("Catch train to Milton station");
+		//fill the listview
 		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, list);
 		arrayAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
@@ -39,7 +41,7 @@ public class Directions extends Activity {
 		getMenuInflater().inflate(R.menu.directions, menu);
 		return true;
 	}
-	
+	//open map screen
 	public void openMap(View view) {
 		Intent i = new Intent(this, Map.class);
 		 startActivity(i);
