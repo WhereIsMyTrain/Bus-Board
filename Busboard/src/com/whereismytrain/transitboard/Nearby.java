@@ -16,6 +16,7 @@ public class Nearby extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nearby);
 		jsonp jParser = new jsonp();
+		//Much of this function may be moved server side so that only one HTTP request is made
 		// Using a hardcoded url for simplicity for the tech spike
 		String url = "http://deco3801-003.uqcloud.net/opia/location/rest/stops-nearby/AD:300%20sir%20fred%20schonell?radiusM=500&useWalkingDistance=true&maxResults=20";
 		 
@@ -30,6 +31,7 @@ public class Nearby extends Activity {
 				String id = c.getString("StopId");
 				url = "http://deco3801-003.uqcloud.net/opia/location/rest/stops?ids=SI%3A"
 						+ id;
+				//Look to move this step to Server side to reduce the number of HTTP request the clients makes
 				JSONObject stopDetails = jParser.getJSONFromUrl(url);
 				JSONObject stopDetail = stopDetails.getJSONArray("Stops")
 						.getJSONObject(0);
