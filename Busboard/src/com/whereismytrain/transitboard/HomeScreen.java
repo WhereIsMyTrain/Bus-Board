@@ -104,6 +104,11 @@ public class HomeScreen extends Activity {
 		 startActivity(i);
 	}
 	
+	public void nearby(View view) {
+		Intent i = new Intent(this, Nearby.class);
+		 startActivity(i);
+	}
+	
 	
 
 }

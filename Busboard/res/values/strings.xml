@@ -17,5 +17,6 @@
     <string name="title_activity_map">Map</string>
     <string name="title_activity_status">Status</string>
     <string name="title_activity_statistics">Statistics</string>
+    <string name="title_activity_nearby">Nearby</string>
 
 </resources>
