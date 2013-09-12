@@ -1,0 +1,529 @@
+{
+  "TravelOptions": {
+    "Itineraries": [
+      {
+        "DurationMins": 42,
+        "EndTime": "/Date(1378713480000+1000)/",
+        "Fare": {
+          "Fares": [
+            {
+              "Name": "go card adult",
+              "Price": 3.85
+            },
+            {
+              "Name": "go card child",
+              "Price": 1.93
+            },
+            {
+              "Name": "go card concession",
+              "Price": 1.93
+            },
+            {
+              "Name": "go card off-peak adult",
+              "Price": 3.08
+            },
+            {
+              "Name": "go card off-peak child",
+              "Price": 1.54
+            },
+            {
+              "Name": "go card off-peak concession",
+              "Price": 1.54
+            },
+            {
+              "Name": "Single paper adult",
+              "Price": 5.6
+            },
+            {
+              "Name": "Single paper child",
+              "Price": 2.8
+            },
+            {
+              "Name": "Single paper concession",
+              "Price": 2.8
+            }
+          ],
+          "MaximumZone": 2,
+          "MinimumZone": 1,
+          "TotalZones": 2
+        },
+        "FirstDepartureTime": "/Date(1378710960000+1000)/",
+        "LastArrivalTime": "/Date(1378713480000+1000)/",
+        "Legs": [
+          {
+            "ArrivalTime": "/Date(1378712280000+1000)/",
+            "DepartureTime": "/Date(1378710960000+1000)/",
+            "DistanceM": 4228,
+            "DurationMins": 22,
+            "FromStopId": "1842",
+            "Instruction": "At 17:16, take Bus route 412 (Translink) and get off at stop North Quay Stop 106 near Herschel St, street North (CITY) near street Herschel (+/- 22 min.).\nLast intersections: Exford STREET (CITY), North QUAY (CITY), Makerston St Emergency Vehicle RAMP (CITY).",
+            "Polyline": "frxfD_xxd\\k@hAYt@EDyBkA_BPc@F{AhAk@Z????o@HC?_@Cu@EoAMY@qA`AsBrBC@c@JA???w@?E?yB_@m@Iy@QG?SDG?e@OqCk@AA??YO?A??c@k@{DmFAC_@cAKa@Gc@Sk@_@a@gAo@ACyA_AECcHqDCAaDmBg@[y@q@GCyEgECCmK{LmF{FAAy@w@_B{AkGgGCC_AmAACsC_EkHiKCC}BqCeAeA_AgAIKeA{AACYe@s@aBACCMMc@K[WaA[{A?E[{Aq@uCKu@@EM}ASqBEk@Ek@CYEe@Ag@@y@H{A@_@AA???A?g@@y@BMB[FUDQBChBwB",
+            "Route": {
+              "Code": "412",
+              "Direction": 4,
+              "IsExpress": true,
+              "IsFree": false,
+              "IsPrepaid": false,
+              "IsTransLinkService": true,
+              "Name": "St Lucia South, Uni of Qld, St Lucia, Toowong, Milton, City",
+              "ServiceType": 2,
+              "Vehicle": 2
+            },
+            "SameVehicleContinuation": false,
+            "ToStopId": "106",
+            "TravelMode": 2,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378712580000+1000)/",
+            "DepartureTime": "/Date(1378712280000+1000)/",
+            "DistanceM": 296,
+            "DurationMins": 5,
+            "FromStopId": "106",
+            "Instruction": "Take North QY and walk to Makerston ST, it is the next street.\nTurn right and walk to Roma ST, it is the next street.\nTurn left and walk to stop Roma Street Stop 121 at Police HQ in CITY, it is on the left (+/- 5 min.).",
+            "Polyline": "fzsfDwk}d\\eBtBmDaFETQhA",
+            "Route": null,
+            "SameVehicleContinuation": false,
+            "ToStopId": "121",
+            "TravelMode": 16,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378713480000+1000)/",
+            "DepartureTime": "/Date(1378712820000+1000)/",
+            "DistanceM": 3223,
+            "DurationMins": 11,
+            "FromStopId": "121",
+            "Instruction": "At 17:47, take Bus route 380 (Translink) and get off at stop Waterworks Rd at Whitta Street, stop 12, street Waterworks (RED HILL (BRISBANE CITY)) following street Whitta (+/- 11 min.).\nLast intersections: Saint Barnabas PLACE (RED HILL (BRISBANE CITY)), Lintern STREET (RED HILL (BRISBANE CITY)), Whitta STREET (RED HILL (BRISBANE CITY)).",
+            "Polyline": "npsfDgl}d\\k@nD?Bq@|DE\\C\\A@BTB`@@FPjBTlC?FBVDZBLBj@RhCB^?FARCNQ`@W\\IHADCBOH?@??_@H??A?[EUECAQISM[U]_@[e@EEmAsBCCo@u@}@eAECaAAaABC?qB?C?_BEM?E?_DGA?kBCUAC?gDGaBrCWj@[t@ADC@GJ?Bo@lACDe@z@C@_@f@GLe@j@CDm@z@UZCB{B~BWp@Sh@GVY~@BjA@X@dA?@??I`@o@rBa@hAYx@Ob@CB{AnAEBq@RuBj@IHaBbAwAv@e@h@ABMP[l@CBSd@S\\KN_@h@AB]v@O^IJEDC@MLGLeAv@c@TW\\[p@Sr@OVBnA@V?JCXYdBSnAa@t@????k@h@CBaAh@C@]Fg@D",
+            "Route": {
+              "Code": "380",
+              "Direction": 5,
+              "IsExpress": false,
+              "IsFree": false,
+              "IsPrepaid": false,
+              "IsTransLinkService": true,
+              "Name": "City, Spring Hill, Red Hill, Ashgrove, Hilder Rd, The Gap",
+              "ServiceType": 1,
+              "Vehicle": 2
+            },
+            "SameVehicleContinuation": false,
+            "ToStopId": "2030",
+            "TravelMode": 2,
+            "TripDetails": null
+          }
+        ],
+        "StartTime": "/Date(1378710960000+1000)/",
+        "Transfers": 1
+      },
+      {
+        "DurationMins": 42,
+        "EndTime": "/Date(1378713480000+1000)/",
+        "Fare": {
+          "Fares": [
+            {
+              "Name": "go card adult",
+              "Price": 3.85
+            },
+            {
+              "Name": "go card child",
+              "Price": 1.93
+            },
+            {
+              "Name": "go card concession",
+              "Price": 1.93
+            },
+            {
+              "Name": "go card off-peak adult",
+              "Price": 3.08
+            },
+            {
+              "Name": "go card off-peak child",
+              "Price": 1.54
+            },
+            {
+              "Name": "go card off-peak concession",
+              "Price": 1.54
+            },
+            {
+              "Name": "Single paper adult",
+              "Price": 5.6
+            },
+            {
+              "Name": "Single paper child",
+              "Price": 2.8
+            },
+            {
+              "Name": "Single paper concession",
+              "Price": 2.8
+            }
+          ],
+          "MaximumZone": 2,
+          "MinimumZone": 1,
+          "TotalZones": 2
+        },
+        "FirstDepartureTime": "/Date(1378710960000+1000)/",
+        "LastArrivalTime": "/Date(1378713480000+1000)/",
+        "Legs": [
+          {
+            "ArrivalTime": "/Date(1378711200000+1000)/",
+            "DepartureTime": "/Date(1378710960000+1000)/",
+            "DistanceM": 1644,
+            "DurationMins": 4,
+            "FromStopId": "1842",
+            "Instruction": "At 17:16, take Bus route 412 (Translink) and get off at stop Coronation Dr at Wesley Hospital, stop 9, street Coronation (TOOWONG) near street Land (+/- 4 min.).\nLast intersections: Landsborough TERRACE (TOOWONG), Bicentennial Bikeway (TOOWONG), Patrick LANE (TOOWONG).",
+            "Polyline": "frxfD_xxd\\k@hAYt@EDyBkA_BPc@F{AhAk@Z????o@HC?_@Cu@EoAMY@qA`AsBrBC@c@JA???w@?E?yB_@m@Iy@QG?SDG?e@OqCk@AA??YO?A??c@k@{DmFAC_@cAKa@Gc@Sk@_@a@gAo@ACyA_AECcHqDCAaDmB",
+            "Route": {
+              "Code": "412",
+              "Direction": 4,
+              "IsExpress": true,
+              "IsFree": false,
+              "IsPrepaid": false,
+              "IsTransLinkService": true,
+              "Name": "St Lucia South, Uni of Qld, St Lucia, Toowong, Milton, City",
+              "ServiceType": 2,
+              "Vehicle": 2
+            },
+            "SameVehicleContinuation": false,
+            "ToStopId": "1951",
+            "TravelMode": 2,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378712460000+1000)/",
+            "DepartureTime": "/Date(1378711380000+1000)/",
+            "DistanceM": 3509,
+            "DurationMins": 18,
+            "FromStopId": "1951",
+            "Instruction": "At 17:23, take Bus route 444 (Translink) and get off at stop King George Square station, platform 2A, street Inner Northern (CITY) (+/- 18 min.).\nLast intersections: Path (CITY).",
+            "Polyline": "zevfDcmyd\\g@[y@q@GCyEgECCmK{LmF{FAAy@w@_B{AkGgGCC_AmAACsC_EkHiKCC}BqCeAeAiAsAeA{AACYe@s@aBACCMMc@K[WaA[{A?E[{Aq@uCKu@??A?AA[eBAEU_BEYGKGGECMASAOHSLe@X]^KBq@DBVCBc@B????UG????OSA???W}@e@gCWeC?gAJeAh@mDn@yDLu@BKFg@?ABUXcELaATq@~@mB~@qCCCAACC?C?C?G???ABA@C@ABA@AB?B?B?@@@ATi@h@g@p@e@fAwAzB_C",
+            "Route": {
+              "Code": "444",
+              "Direction": 4,
+              "IsExpress": true,
+              "IsFree": false,
+              "IsPrepaid": false,
+              "IsTransLinkService": true,
+              "Name": "Moggill, Kenmore, Chapel Hill, RomaSt, Cultural Centre, GoMA",
+              "ServiceType": 2,
+              "Vehicle": 2
+            },
+            "SameVehicleContinuation": false,
+            "ToStopId": "10780",
+            "TravelMode": 2,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378712520000+1000)/",
+            "DepartureTime": "/Date(1378712460000+1000)/",
+            "DistanceM": 65,
+            "DurationMins": 1,
+            "FromStopId": "10780",
+            "Instruction": "Exit from portal King George Station.\nCross and go back on Adelaide ST and walk to stop Adelaide Street Stop 42 near Albert St in CITY, it is on the right (+/- 1 min.).",
+            "Polyline": "x}sfDmp~d\\h@s@C@BDHQW]",
+            "Route": null,
+            "SameVehicleContinuation": false,
+            "ToStopId": "42",
+            "TravelMode": 16,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378713480000+1000)/",
+            "DepartureTime": "/Date(1378712700000+1000)/",
+            "DistanceM": 4077,
+            "DurationMins": 13,
+            "FromStopId": "42",
+            "Instruction": "At 17:45, take Bus route 380 (Translink) and get off at stop Waterworks Rd at Whitta Street, stop 12, street Waterworks (RED HILL (BRISBANE CITY)) following street Whitta (+/- 13 min.).\nLast intersections: Saint Barnabas PLACE (RED HILL (BRISBANE CITY)), Lintern STREET (RED HILL (BRISBANE CITY)), Whitta STREET (RED HILL (BRISBANE CITY)).",
+            "Polyline": "p~sfDes~d\\Zb@@BlCtD@@rBrC?HoChCCFsApA_Az@CBqCnCCBMJg@f@aBzACBkAfAYxAERADWvAk@nD?Bq@|DE\\C\\A@BTB`@@FPjBTlC?FBVDZBLBj@RhCB^?FARCNQ`@W\\IHADCBOH?@??_@H??A?[EUECAQISM[U]_@[e@EEmAsBCCo@u@}@eAECaAAaABC?qB?C?_BEM?E?_DGA?kBCUAC?gDGaBrCWj@[t@ADC@GJ?Bo@lACDe@z@C@_@f@GLe@j@CDm@z@UZCB{B~BWp@Sh@GVY~@BjA@X@dA?@??I`@o@rBa@hAYx@Ob@CB{AnAEBq@RuBj@IHaBbAwAv@e@h@ABMP[l@CBSd@S\\KN_@h@AB]v@O^IJEDC@MLGLeAv@c@TW\\[p@Sr@OVBnA@V?JCXYdBSnAa@t@????k@h@CBaAh@C@]Fg@D",
+            "Route": {
+              "Code": "380",
+              "Direction": 5,
+              "IsExpress": false,
+              "IsFree": false,
+              "IsPrepaid": false,
+              "IsTransLinkService": true,
+              "Name": "City, Spring Hill, Red Hill, Ashgrove, Hilder Rd, The Gap",
+              "ServiceType": 1,
+              "Vehicle": 2
+            },
+            "SameVehicleContinuation": false,
+            "ToStopId": "2030",
+            "TravelMode": 2,
+            "TripDetails": null
+          }
+        ],
+        "StartTime": "/Date(1378710960000+1000)/",
+        "Transfers": 2
+      },
+      {
+        "DurationMins": 45,
+        "EndTime": "/Date(1378713180000+1000)/",
+        "Fare": {
+          "Fares": [
+            {
+              "Name": "go card adult",
+              "Price": 3.85
+            },
+            {
+              "Name": "go card child",
+              "Price": 1.93
+            },
+            {
+              "Name": "go card concession",
+              "Price": 1.93
+            },
+            {
+              "Name": "go card off-peak adult",
+              "Price": 3.08
+            },
+            {
+              "Name": "go card off-peak child",
+              "Price": 1.54
+            },
+            {
+              "Name": "go card off-peak concession",
+              "Price": 1.54
+            },
+            {
+              "Name": "Single paper adult",
+              "Price": 5.6
+            },
+            {
+              "Name": "Single paper child",
+              "Price": 2.8
+            },
+            {
+              "Name": "Single paper concession",
+              "Price": 2.8
+            }
+          ],
+          "MaximumZone": 2,
+          "MinimumZone": 1,
+          "TotalZones": 2
+        },
+        "FirstDepartureTime": "/Date(1378710900000+1000)/",
+        "LastArrivalTime": "/Date(1378713180000+1000)/",
+        "Legs": [
+          {
+            "ArrivalTime": "/Date(1378710900000+1000)/",
+            "DepartureTime": "/Date(1378710480000+1000)/",
+            "DistanceM": 437,
+            "DurationMins": 7,
+            "FromStopId": "1841",
+            "Instruction": "Take Sir Fred Schonell DR and walk to Gailey RD, it is the next street.\nTurn right and walk to Brisbane ST, it is the next street.\nTake Brisbane ST and walk to Herbert ST, it is the next street.\nTurn left and walk to Josling ST, it is the next street.\nTurn left and walk to stop Josling St near Herbert St, stop 16 in TOOWONG, it is on the right (+/- 7 min.).",
+            "Polyline": "nrxfDoyxd\\aAnBUl@A`@sBkA}APc@H{AfAg@ZA?A@i@FBt@CV`@Z",
+            "Route": null,
+            "SameVehicleContinuation": false,
+            "ToStopId": "1857",
+            "TravelMode": 16,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378712160000+1000)/",
+            "DepartureTime": "/Date(1378710900000+1000)/",
+            "DistanceM": 4828,
+            "DurationMins": 21,
+            "FromStopId": "1857",
+            "Instruction": "At 17:15, take Bus route 417 (Translink) and get off at stop Adelaide Street Stop 22 near City Hall, street Adelaide (CITY) following street Brisbane Arcade (+/- 21 min.).\nLast intersections: Queen Adelaide Building Arcade (CITY), Albert STREET (CITY), Brisbane Arcade (CITY).",
+            "Polyline": "tcxfDknxd\\k@e@CCCeA_@Cu@EoAMY@qA`AsBrBC@c@JA???w@?E?yB_@m@Iy@QG?SDG?e@OqCk@AA??YO?A??c@k@{DmFAC_@cAKa@Gc@Sk@_@a@gAo@ACyA_AECcHqDCAaDmBg@[y@q@GCyEgECCkByBaHaImF{FAAy@w@_B{A{EuEo@q@CC_AmAACsC_EkHiKCC}BqCeAeA_AgAIKeA{AACYe@s@aBACCMMc@K[WaA[{A?E[{Aq@uCKu@@EM}ASqBEk@Ek@CYEe@Ag@@y@H{A@_@AA???A?g@@y@BMB[FUDQBChBwBZa@BCrBoBXm@@CrBcEDEhBeDDEbBiBh@k@aCeDCEsBuCoCwD?AeAwAQU",
+            "Route": {
+              "Code": "417",
+              "Direction": 4,
+              "IsExpress": false,
+              "IsFree": false,
+              "IsPrepaid": false,
+              "IsTransLinkService": true,
+              "Name": "Long Pocket, Indooroopilly, Toowong, City (Wickham Tce)",
+              "ServiceType": 1,
+              "Vehicle": 2
+            },
+            "SameVehicleContinuation": false,
+            "ToStopId": "22",
+            "TravelMode": 2,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378712220000+1000)/",
+            "DepartureTime": "/Date(1378712160000+1000)/",
+            "DistanceM": 47,
+            "DurationMins": 1,
+            "FromStopId": "22",
+            "Instruction": "Take Adelaide ST and walk to stop Adelaide Street Stop 42 near Albert St in CITY, it is on the left, it is after the next street (+/- 1 min.).",
+            "Polyline": "p|sfDeu~d\\NTLKd@p@",
+            "Route": null,
+            "SameVehicleContinuation": false,
+            "ToStopId": "42",
+            "TravelMode": 16,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378713180000+1000)/",
+            "DepartureTime": "/Date(1378712400000+1000)/",
+            "DistanceM": 4077,
+            "DurationMins": 13,
+            "FromStopId": "42",
+            "Instruction": "At 17:40, take Bus route 379 (Translink) and get off at stop Waterworks Rd at Whitta Street, stop 12, street Waterworks (RED HILL (BRISBANE CITY)) following street Whitta (+/- 13 min.).\nLast intersections: Saint Barnabas PLACE (RED HILL (BRISBANE CITY)), Lintern STREET (RED HILL (BRISBANE CITY)), Whitta STREET (RED HILL (BRISBANE CITY)).",
+            "Polyline": "p~sfDes~d\\Zb@@BlCtD@@rBrC?HoChCCFsApA_Az@CBqCnCCBMJg@f@aBzACBkAfAYxAERADWvAk@nD?Bq@|DE\\C\\A@BTB`@@FPjBTlC?FBVDZBLBj@RhCB^?FARCNQ`@W\\IHADCBOH?@??_@H??A?[EUECAQISM[U]_@[e@EEmAsBCCo@u@}@eAECaAAaABC?qB?C?_BEM?E?_DGA?kBCUAC?gDGaBrCWj@[t@ADC@GJ?Bo@lACDe@z@C@_@f@GLe@j@CDm@z@UZCB{B~BWp@Sh@GVY~@BjA@X@dA?@??I`@o@rBa@hAYx@Ob@CB{AnAEBq@RuBj@IHaBbAwAv@e@h@ABMP[l@CBSd@S\\KN_@h@AB]v@O^IJEDC@MLGLeAv@c@TW\\[p@Sr@OVBnA@V?JCXYdBSnAa@t@????k@h@CBaAh@C@]Fg@D",
+            "Route": {
+              "Code": "379",
+              "Direction": 5,
+              "IsExpress": false,
+              "IsFree": false,
+              "IsPrepaid": false,
+              "IsTransLinkService": true,
+              "Name": "Stafford, Grange Heights, Lutwyche, RBWH, Valley, City",
+              "ServiceType": 1,
+              "Vehicle": 2
+            },
+            "SameVehicleContinuation": false,
+            "ToStopId": "2030",
+            "TravelMode": 2,
+            "TripDetails": null
+          }
+        ],
+        "StartTime": "/Date(1378710480000+1000)/",
+        "Transfers": 1
+      },
+      {
+        "DurationMins": 42,
+        "EndTime": "/Date(1378713180000+1000)/",
+        "Fare": {
+          "Fares": [
+            {
+              "Name": "go card adult",
+              "Price": 3.85
+            },
+            {
+              "Name": "go card child",
+              "Price": 1.93
+            },
+            {
+              "Name": "go card concession",
+              "Price": 1.93
+            },
+            {
+              "Name": "go card off-peak adult",
+              "Price": 3.08
+            },
+            {
+              "Name": "go card off-peak child",
+              "Price": 1.54
+            },
+            {
+              "Name": "go card off-peak concession",
+              "Price": 1.54
+            },
+            {
+              "Name": "Single paper adult",
+              "Price": 5.6
+            },
+            {
+              "Name": "Single paper child",
+              "Price": 2.8
+            },
+            {
+              "Name": "Single paper concession",
+              "Price": 2.8
+            }
+          ],
+          "MaximumZone": 2,
+          "MinimumZone": 1,
+          "TotalZones": 2
+        },
+        "FirstDepartureTime": "/Date(1378710660000+1000)/",
+        "LastArrivalTime": "/Date(1378713180000+1000)/",
+        "Legs": [
+          {
+            "ArrivalTime": "/Date(1378710780000+1000)/",
+            "DepartureTime": "/Date(1378710660000+1000)/",
+            "DistanceM": 726,
+            "DurationMins": 2,
+            "FromStopId": "1842",
+            "Instruction": "At 17:11, take Bus route 412[U] (Translink) and get off at stop Benson St at Toowong, stop 14, street Benson (TOOWONG) near street Glen (+/- 2 min.).\nLast intersections: Glen ROAD (TOOWONG), MacDonnell STREET (TOOWONG).",
+            "Polyline": "frxfD_xxd\\k@hAYt@EDyBkA_BPc@F{AhAk@Z????o@HC?_@Cu@EoAMY@qA`AsBrBC@c@JA???w@?E?yB_@",
+            "Route": {
+              "Code": "412",
+              "Direction": 4,
+              "IsExpress": true,
+              "IsFree": false,
+              "IsPrepaid": false,
+              "IsTransLinkService": true,
+              "Name": "St Lucia South, Uni of Qld, St Lucia, Toowong, Milton, City",
+              "ServiceType": 2,
+              "Vehicle": 2
+            },
+            "SameVehicleContinuation": false,
+            "ToStopId": "1891",
+            "TravelMode": 2,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378712160000+1000)/",
+            "DepartureTime": "/Date(1378710960000+1000)/",
+            "DistanceM": 4382,
+            "DurationMins": 20,
+            "FromStopId": "1891",
+            "Instruction": "At 17:16, take Bus route 417 (Translink) and get off at stop Adelaide Street Stop 22 near City Hall, street Adelaide (CITY) following street Brisbane Arcade (+/- 20 min.).\nLast intersections: Queen Adelaide Building Arcade (CITY), Albert STREET (CITY), Brisbane Arcade (CITY).",
+            "Polyline": "xnwfDmmxd\\m@Iy@QG?SDG?e@OqCk@AA??YO?A??c@k@{DmFAC_@cAKa@Gc@Sk@_@a@gAo@ACyA_AECcHqDCAaDmBg@[y@q@GCyEgECCkByBaHaImF{FAAy@w@_B{A{EuEo@q@CC_AmAACsC_EkHiKCC}BqCeAeA_AgAIKeA{AACYe@s@aBACCMMc@K[WaA[{A?E[{Aq@uCKu@@EM}ASqBEk@Ek@CYEe@Ag@@y@H{A@_@AA???A?g@@y@BMB[FUDQBChBwBZa@BCrBoBXm@@CrBcEDEhBeDDEbBiBh@k@aCeDCEsBuCoCwD?AeAwAQU",
+            "Route": {
+              "Code": "417",
+              "Direction": 4,
+              "IsExpress": false,
+              "IsFree": false,
+              "IsPrepaid": false,
+              "IsTransLinkService": true,
+              "Name": "Long Pocket, Indooroopilly, Toowong, City (Wickham Tce)",
+              "ServiceType": 1,
+              "Vehicle": 2
+            },
+            "SameVehicleContinuation": false,
+            "ToStopId": "22",
+            "TravelMode": 2,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378712220000+1000)/",
+            "DepartureTime": "/Date(1378712160000+1000)/",
+            "DistanceM": 47,
+            "DurationMins": 1,
+            "FromStopId": "22",
+            "Instruction": "Take Adelaide ST and walk to stop Adelaide Street Stop 42 near Albert St in CITY, it is on the left, it is after the next street (+/- 1 min.).",
+            "Polyline": "p|sfDeu~d\\NTLKd@p@",
+            "Route": null,
+            "SameVehicleContinuation": false,
+            "ToStopId": "42",
+            "TravelMode": 16,
+            "TripDetails": null
+          },
+          {
+            "ArrivalTime": "/Date(1378713180000+1000)/",
+            "DepartureTime": "/Date(1378712400000+1000)/",
+            "DistanceM": 4077,
+            "DurationMins": 13,
+            "FromStopId": "42",
+            "Instruction": "At 17:40, take Bus route 379 (Translink) and get off at stop Waterworks Rd at Whitta Street, stop 12, street Waterworks (RED HILL (BRISBANE CITY)) following street Whitta (+/- 13 min.).\nLast intersections: Saint Barnabas PLACE (RED HILL (BRISBANE CITY)), Lintern STREET (RED HILL (BRISBANE CITY)), Whitta STREET (RED HILL (BRISBANE CITY)).",
+            "Polyline": "p~sfDes~d\\Zb@@BlCtD@@rBrC?HoChCCFsApA_Az@CBqCnCCBMJg@f@aBzACBkAfAYxAERADWvAk@nD?Bq@|DE\\C\\A@BTB`@@FPjBTlC?FBVDZBLBj@RhCB^?FARCNQ`@W\\IHADCBOH?@??_@H??A?[EUECAQISM[U]_@[e@EEmAsBCCo@u@}@eAECaAAaABC?qB?C?_BEM?E?_DGA?kBCUAC?gDGaBrCWj@[t@ADC@GJ?Bo@lACDe@z@C@_@f@GLe@j@CDm@z@UZCB{B~BWp@Sh@GVY~@BjA@X@dA?@??I`@o@rBa@hAYx@Ob@CB{AnAEBq@RuBj@IHaBbAwAv@e@h@ABMP[l@CBSd@S\\KN_@h@AB]v@O^IJEDC@MLGLeAv@c@TW\\[p@Sr@OVBnA@V?JCXYdBSnAa@t@????k@h@CBaAh@C@]Fg@D",
+            "Route": {
+              "Code": "379",
+              "Direction": 5,
+              "IsExpress": false,
+              "IsFree": false,
+              "IsPrepaid": false,
+              "IsTransLinkService": true,
+              "Name": "Stafford, Grange Heights, Lutwyche, RBWH, Valley, City",
+              "ServiceType": 1,
+              "Vehicle": 2
+            },
+            "SameVehicleContinuation": false,
+            "ToStopId": "2030",
+            "TravelMode": 2,
+            "TripDetails": null
+          }
+        ],
+        "StartTime": "/Date(1378710660000+1000)/",
+        "Transfers": 2
+      }
+    ],
+    "SearchIsInFlexiLinkArea": false
+  }
+}
