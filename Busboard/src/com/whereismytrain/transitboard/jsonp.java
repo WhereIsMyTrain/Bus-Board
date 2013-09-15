@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 import android.os.StrictMode;
  
-public class jsonp {
+public class Jsonp {
  
     static InputStream is = null;
     static JSONObject JSON = null;
@@ -23,7 +23,7 @@ public class jsonp {
     
  
     // constructor
-    public jsonp() {
+    public Jsonp() {
  
     }
  

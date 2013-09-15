@@ -41,30 +41,27 @@ import android.util.Log;
 
 
 public class HomeScreen extends Activity {
-	
-	private Location userLocation;
-
-	//JSON Parser should spurt something like this out:
-	public static Object[][] busstops = {
-		{1882, "UQ Lakes station", -27.49805, 153.018077 , 2, "http://translink.com.au/stop/001882"},
-		{1801,"UQ Chancellor's Place", -27.498448, 153.011036, 2, "http://translink.com.au/stop/001801"}
-	}; 
+	public Location userLocation;
 	private Intent routeIntent;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_screen);
 		TextView or = (TextView)findViewById(R.id.Or);
+		
+		//starts up the location listener which updates the variable userLocation
 		getUserLocation();
 		
-		try {
-			bindNearbyStops(userLocation);
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (userLocation != null) {
+			try {
+				bindNearbyStops(userLocation);
+			} catch (NullPointerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		Spinner time = (Spinner)findViewById(R.id.timeSpinner);
@@ -89,7 +86,7 @@ public class HomeScreen extends Activity {
 	}
 	
 	public void bindNearbyStops(Location location) throws NullPointerException, JSONException{
-		jsonp jParser = new jsonp();
+		Jsonp jParser = new Jsonp();
 		//Much of this function may be moved server side so that only one HTTP request is made
 		// Using a hardcoded url for simplicity for the tech spike
 		//https://opia.api.translink.com.au/v1/content/swaggerui/index.aspx
@@ -142,28 +139,7 @@ public class HomeScreen extends Activity {
 		}
 	}
 	
-	LocationListener locationListener = new LocationListener() {
-	    public void onLocationChanged(Location location) {
-	      // Called when a new location is found by the network location provider.
-	      userLocation = location;
-	      try {
-			bindNearbyStops(userLocation);
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	      
-	    }
-
-	    public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-	    public void onProviderEnabled(String provider) {}
-
-	    public void onProviderDisabled(String provider) {}
-	  };
+	
 
 	public void getUserLocation() {
 		Boolean isGPSEnabled;
@@ -175,18 +151,45 @@ public class HomeScreen extends Activity {
                 .isProviderEnabled(LocationManager.GPS_PROVIDER);
 		isNetworkEnabled = locationManager
                 .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 		
 		if (userLocation == null)
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 20000, 10, locationListener);
 		if (userLocation == null)
-			locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
-			//location = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-		
+				locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 20000, 10, locationListener);
+	
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 10, locationListener);
+				
 		if (userLocation != null)
 			Toast.makeText(getApplicationContext(), userLocation.getLatitude() + ", " + userLocation.getLongitude() , Toast.LENGTH_LONG).show();
+
+		//locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+		//locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
+		
+		
 	}
+	LocationListener locationListener = new LocationListener() {
+	    public void onLocationChanged(Location location) {
+	      // Called when a new location is found by the network location provider.
+	    	userLocation = location; 
+		    Toast.makeText(getApplicationContext(), userLocation.getLatitude() + 
+		  		  ", " + userLocation.getLongitude() , Toast.LENGTH_LONG).show();
+		    try {
+				bindNearbyStops(userLocation);
+			} catch (NullPointerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+
+	    public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+	    public void onProviderEnabled(String provider) {}
+
+	    public void onProviderDisabled(String provider) {}
+	  };
 	//open map
 	public void mapScreen(View view) {
 		Intent i = new Intent(this, Map.class);

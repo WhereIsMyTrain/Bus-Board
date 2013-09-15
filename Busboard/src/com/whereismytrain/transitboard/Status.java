@@ -20,5 +20,10 @@ public class Status extends Activity {
 		getMenuInflater().inflate(R.menu.status, menu);
 		return true;
 	}
+	
+	public String[] retrieveTwitterFeed(String url) {
+		return null;
+		
+	}
 
 }

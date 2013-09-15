@@ -20,5 +20,21 @@ public class Statistics extends Activity {
 		getMenuInflater().inflate(R.menu.statistics, menu);
 		return true;
 	}
+	
+	public void updateDistance(int dist) {
+		//updates variable in database to += dist
+	}
+	
+	public int getTotalDistance() {
+		int dist = 0;
+		return dist;
+	}
+	public void setDistance(int dist) {
+		int distance = dist;
+	}
+	
+	public void resetDistance() {
+		int distance = 0;
+	}
 
 }

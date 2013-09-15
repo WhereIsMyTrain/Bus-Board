@@ -81,8 +81,9 @@ public class Map extends FragmentActivity {
 
 	}
 	
-	protected void findNearestBusLocations(LatLng myLatLng) {
-		
+	public Location[] findNearestStops(Double latitude, Double longitude) {
+		Location[] stopLocations = new Location[10];
+		return stopLocations;
 	}
 	//Open the directions screen
 	public void openDirections(View view) {

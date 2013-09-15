@@ -1,5 +1,8 @@
 package com.whereismytrain.transitboard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,9 +20,12 @@ public class TravelRoutes extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_travel_routes);
+		String originStopId = "";
+		String destStopId = "";
+		String dateTime = "";
 		
 		try {
-			retrieveTravelRoutes();
+			retrieveTravelRoutes(originStopId, destStopId, dateTime);
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(), 
                     "An error Occurred", Toast.LENGTH_LONG).show();
@@ -33,14 +39,18 @@ public class TravelRoutes extends Activity {
 		return true;
 	}
 	
-	public void retrieveTravelRoutes() throws Exception{
+	public String[][] retrieveTravelRoutes(String originStopId, String destStopId,
+			String dateTime) throws Exception{
+		List<String> list = new ArrayList<String>();
+		
+		String[][] routes = new String[10][];
 		String url = 
 				"https://opia.api.translink.com.au/v1/travel/" +
 				"rest/plan/SI%3A001841/SI%3A002030?timeMode=1&at" +
 				"=09%2F09%2F2013+18%3A00&walkSpeed=1&maximumWalkingDistanceM=" +
 				"500&api_key=special-key";
 		
-		jsonp jParser = new jsonp();
+		Jsonp jParser = new Jsonp();
 		JSONObject obj = jParser.getJSONFromUrl(url);
 		
 		
@@ -74,5 +84,6 @@ public class TravelRoutes extends Activity {
 						
 				}
 			}
+			return routes;
 	}
 }

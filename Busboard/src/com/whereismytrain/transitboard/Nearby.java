@@ -42,7 +42,7 @@ public class Nearby extends Activity {
 	
 	
 	public void nearbyStops() throws JSONException, NullPointerException {
-		jsonp jParser = new jsonp();
+		Jsonp jParser = new Jsonp();
 		//Much of this function may be moved server side so that only one HTTP request is made
 		// Using a hardcoded url for simplicity for the tech spike
 		//https://opia.api.translink.com.au/v1/content/swaggerui/index.aspx

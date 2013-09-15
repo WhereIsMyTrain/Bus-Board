@@ -46,5 +46,12 @@ public class Directions extends Activity {
 		Intent i = new Intent(this, Map.class);
 		 startActivity(i);
 	}
+	public String[] retrieveDirections(String routeId) {
+		String[] directions;
+		directions = new String[10];
+		return directions;
+		
+		
+	}
 
 }
