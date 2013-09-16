@@ -1,0 +1,108 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  Internal Error (javaClasses.cpp:129), pid=6096, tid=5988
+#  fatal error: Invalid layout of preloaded class
+#
+# JRE version: 7.0_25-b17
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (23.25-b01 mixed mode windows-amd64 compressed oops)
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+# If you would like to submit a bug report, please visit:
+#   http://bugreport.sun.com/bugreport/crash.jsp
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000000000033c800):  JavaThread "Unknown thread" [_thread_in_vm, id=5988, stack(0x0000000002260000,0x0000000002360000)]
+
+Stack: [0x0000000002260000,0x0000000002360000]
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x000000000033c800 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=5988, stack(0x0000000002260000,0x0000000002360000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (10 events):
+Event: 1.304 loading class 0x000000000211b350 done
+Event: 1.305 loading class 0x00000000020e5050 done
+Event: 1.305 loading class 0x00000000020e5020
+Event: 1.318 loading class 0x00000000021231a0
+Event: 1.329 loading class 0x00000000021231a0 done
+Event: 1.329 loading class 0x00000000021231e0
+Event: 1.350 loading class 0x00000000021231e0 done
+Event: 1.350 loading class 0x000000000216e750
+Event: 1.379 loading class 0x000000000216e750 done
+Event: 1.379 loading class 0x00000000020e5020 done
+
+
+Dynamic libraries:
+0x000000013fed0000 - 0x000000013ff03000 	C:\Program Files\Java\jre7\bin\javaw.exe
+0x00000000777a0000 - 0x0000000077949000 	C:\Windows\SYSTEM32\ntdll.dll
+0x0000000077580000 - 0x000000007769f000 	C:\Windows\system32\kernel32.dll
+0x000007fefd920000 - 0x000007fefd98b000 	C:\Windows\system32\KERNELBASE.dll
+0x000007fefe2f0000 - 0x000007fefe3cb000 	C:\Windows\system32\ADVAPI32.dll
+0x000007fefd9b0000 - 0x000007fefda4f000 	C:\Windows\system32\msvcrt.dll
+0x000007fefe420000 - 0x000007fefe43f000 	C:\Windows\SYSTEM32\sechost.dll
+0x000007feff980000 - 0x000007feffaad000 	C:\Windows\system32\RPCRT4.dll
+0x00000000776a0000 - 0x000000007779a000 	C:\Windows\system32\USER32.dll
+0x000007fefddc0000 - 0x000007fefde27000 	C:\Windows\system32\GDI32.dll
+0x000007fefe7a0000 - 0x000007fefe7ae000 	C:\Windows\system32\LPK.dll
+0x000007fefe6d0000 - 0x000007fefe799000 	C:\Windows\system32\USP10.dll
+0x000007fefc050000 - 0x000007fefc244000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_fa396087175ac9ac\COMCTL32.dll
+0x000007fefeaf0000 - 0x000007fefeb61000 	C:\Windows\system32\SHLWAPI.dll
+0x000007fefe850000 - 0x000007fefe87e000 	C:\Windows\system32\IMM32.DLL
+0x000007fefe880000 - 0x000007fefe989000 	C:\Windows\system32\MSCTF.dll
+0x000000006c960000 - 0x000000006ca31000 	C:\Program Files\Java\jre7\bin\msvcr100.dll
+0x000000006c250000 - 0x000000006c95f000 	C:\Program Files\Java\jre7\bin\server\jvm.dll
+0x000007fef8de0000 - 0x000007fef8de9000 	C:\Windows\system32\WSOCK32.dll
+0x000007fefe3d0000 - 0x000007fefe41d000 	C:\Windows\system32\WS2_32.dll
+0x000007fefe100000 - 0x000007fefe108000 	C:\Windows\system32\NSI.dll
+0x000007fef8a50000 - 0x000007fef8a8b000 	C:\Windows\system32\WINMM.dll
+0x0000000077960000 - 0x0000000077967000 	C:\Windows\system32\PSAPI.DLL
+0x0000000074cd0000 - 0x0000000074cdf000 	C:\Program Files\Java\jre7\bin\verify.dll
+0x0000000074bd0000 - 0x0000000074bf8000 	C:\Program Files\Java\jre7\bin\java.dll
+0x0000000074c60000 - 0x0000000074c75000 	C:\Program Files\Java\jre7\bin\zip.dll
+
+VM Arguments:
+jvm_args: -Dfile.encoding=Cp1252 -Xbootclasspath:C:\adt-bundle-windows\sdk\platforms\android-18\android.jar 
+java_command: org.eclipse.jdt.internal.junit.runner.RemoteTestRunner -version 3 -port 59011 -testLoaderClass org.eclipse.jdt.internal.junit.runner.junit3.JUnit3TestLoader -loaderpluginname org.eclipse.jdt.junit.runtime -classNames JSONTest
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+PATH=C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\
+USERNAME=Ben
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 15 Model 76 Stepping 2, AuthenticAMD
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 , 64 bit Build 7601 Service Pack 1
+
+CPU:total 1 (1 cores per cpu, 1 threads per core) family 15 model 76 stepping 2, cmov, cx8, fxsr, mmx, sse, sse2, sse3, mmxext, 3dnowpref, tsc
+
+Memory: 4k page, physical 1505904k(528588k free), swap 3011808k(1130824k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (23.25-b01) for windows-amd64 JRE (1.7.0_25-b17), built on Jun 21 2013 12:58:32 by "java_re" with unknown MS VC++:1600
+
+time: Mon Sep 16 15:15:02 2013
+elapsed time: 1 seconds
+
