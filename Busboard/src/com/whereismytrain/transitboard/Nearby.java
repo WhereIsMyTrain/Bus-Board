@@ -60,6 +60,7 @@ public class Nearby extends Activity {
 			String id = c.getString("StopId");
 			url = "http://deco3801-003.uqcloud.net/opia/location/rest/stops?ids=SI%3A"
 					+ id;
+			//http://deco3801-003.uqcloud.net/opia/location/rest/stops?ids=SI%3A001841
 			//Look to move this step to Server side to reduce the number of HTTP request the clients makes
 			JSONObject stopDetails = jParser.getJSONFromUrl(url);
 			JSONObject stopDetail = stopDetails.getJSONArray("Stops")

@@ -1,54 +1,88 @@
 package com.whereismytrain.transitboard;
 
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
 import com.whereismytrain.transitboard.R;
 
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.View;
 import android.widget.*;
 
-import java.io.*;
- 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Calendar;
 import java.util.List;
- 
-import android.app.Activity;
-import android.os.Bundle;
-import android.util.Log;
 
 
 public class HomeScreen extends Activity {
+	public final static String E_DESTINATION = "com.whereismytrain.transitboard.DESTINATION";
+	public final static String ORIGIN_ID = "com.whereismytrain.transitboard.ORIGIN";
+	public final static String LEAVE_WHEN = "com.whereismytrain.transitboard.LEAVE";
+	public final static String DATE_TIME = "com.whereismytrain.transitboard.DATE";
+	public final static String TEST = "com.whereismytrain.transitboard.TEST";
+	private static List<String> idList = new ArrayList<String>();
+	private static List<String> locations = new ArrayList<String>();
 	public Location userLocation;
 	private Intent routeIntent;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_screen);
-		TextView or = (TextView)findViewById(R.id.Or);
 		
+		AutoCompleteTextView to = (AutoCompleteTextView) findViewById(R.id.To);
+		
+		to.addTextChangedListener(new TextWatcher(){
+	       
+	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+	        public void onTextChanged(CharSequence s, int start, int before, int count){
+	        	Object[] locs = null;
+	        	try {
+	        		List<String> names = new ArrayList<String>();
+					locs = resolveLocation(s.toString());
+					for (int i = 0; i < locs.length; i++) {
+						names.add(((String[])locs[i])[0]);
+					}
+					
+					AutoCompleteTextView to = (AutoCompleteTextView) findViewById(R.id.To);
+		        	ArrayAdapter<String> adapter = 
+		        			new ArrayAdapter<String>(
+		        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, names);
+
+		        	to.setAdapter(adapter);
+				} catch (NullPointerException e) {
+					Toast.makeText(getApplicationContext(), 
+							e.toString(), Toast.LENGTH_LONG).show();
+				} catch (JSONException e) {
+					Toast.makeText(getApplicationContext(), 
+							e.toString(), Toast.LENGTH_LONG).show();
+				} catch (Exception e) {
+					Toast.makeText(getApplicationContext(), 
+							e.toString(), Toast.LENGTH_LONG).show();
+				}
+	        	
+					
+		
+	        	
+	        }
+			@Override
+			public void afterTextChanged(Editable s) {
+			
+				
+			}
+	    });
+		
+		
+		//
 		//starts up the location listener which updates the variable userLocation
 		getUserLocation();
 		
@@ -56,22 +90,11 @@ public class HomeScreen extends Activity {
 			try {
 				bindNearbyStops(userLocation);
 			} catch (NullPointerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		}
 		
-		Spinner time = (Spinner)findViewById(R.id.timeSpinner);
-		List<String> aList = new ArrayList<String>();
-		aList.add("Leave After");
-		aList.add("Arrive Before");
-		ArrayAdapter<String> adapterTime = new ArrayAdapter<String>(this,
-			android.R.layout.simple_spinner_item, aList);
-		adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		time.setAdapter(adapterTime);
+		leaveArriveSpinner();
 		
 		
 
@@ -84,6 +107,43 @@ public class HomeScreen extends Activity {
 		return true;
 		
 	}
+	
+	public void leaveArriveSpinner() {
+		Spinner time = (Spinner)findViewById(R.id.timeSpinner);
+		List<String> aList = new ArrayList<String>();
+		aList.add("Leave After");
+		aList.add("Arrive Before");
+		ArrayAdapter<String> adapterTime = new ArrayAdapter<String>(this,
+			android.R.layout.simple_spinner_item, aList);
+		adapterTime.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		time.setAdapter(adapterTime);
+		
+	}
+	public Object[] resolveLocation(String input) throws NullPointerException, JSONException {
+		
+		String format = input.replace(' ', '+');
+		Object[] resolved = null;
+		List<String[]> places = new ArrayList<String[]>();
+		Jsonp jParser = new Jsonp();
+		String url = "http://deco3801-003.uqcloud.net/opia/location/rest/resolve?" +
+				"input=" + format + "&filter=0&maxResults=20&api_key=special-key";
+		//http://deco3801-003.uqcloud.net/opia/location/rest/resolve?input=Milton&filter=0&maxResults=20&api_key=special-key"
+		JSONObject json = jParser.getJSONFromUrl(url);
+		JSONArray locations = json.getJSONArray("Locations");
+		for (int i = 0; i <locations.length(); i++) {
+			String[] location = new String[2];
+			JSONObject l = locations.getJSONObject(i);
+			location[0] = l.getString("Description");
+			location[1] = l.getString("Id");
+			places.add(location);
+		}
+		resolved = places.toArray();
+		return resolved;
+	}
+	
+	
+	
+	
 	
 	public void bindNearbyStops(Location location) throws NullPointerException, JSONException{
 		Jsonp jParser = new Jsonp();
@@ -113,6 +173,7 @@ public class HomeScreen extends Activity {
 				JSONObject c = stops.getJSONObject(i);
 				//Gets the StopId in the format 'XXXXXX'
 				String id = c.getString("StopId");
+				idList.add(id);
 				url = "http://deco3801-003.uqcloud.net/opia/location/rest/stops?ids=SI%3A"
 						+ id;
 				//Look to move this step to Server side to reduce the number of HTTP request the clients makes
@@ -159,20 +220,15 @@ public class HomeScreen extends Activity {
 	
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 10, locationListener);
 				
-		if (userLocation != null)
-			Toast.makeText(getApplicationContext(), userLocation.getLatitude() + ", " + userLocation.getLongitude() , Toast.LENGTH_LONG).show();
-
-		//locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-		//locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
-		
+		if (userLocation != null){}
 		
 	}
 	LocationListener locationListener = new LocationListener() {
 	    public void onLocationChanged(Location location) {
 	      // Called when a new location is found by the network location provider.
 	    	userLocation = location; 
-		    Toast.makeText(getApplicationContext(), userLocation.getLatitude() + 
-		  		  ", " + userLocation.getLongitude() , Toast.LENGTH_LONG).show();
+		    /*Toast.makeText(getApplicationContext(), userLocation.getLatitude() + 
+		  		  ", " + userLocation.getLongitude() , Toast.LENGTH_LONG).show();*/
 		    try {
 				bindNearbyStops(userLocation);
 			} catch (NullPointerException e) {
@@ -202,7 +258,28 @@ public class HomeScreen extends Activity {
 	}
 	
 	public void routes(View view) {
+		
+		EditText dest = (EditText)findViewById(R.id.To);
+		Spinner leave = (Spinner)findViewById(R.id.timeSpinner);
+		TimePicker timeP = (TimePicker)findViewById(R.id.timePicker1);
+		Spinner origin = (Spinner)findViewById(R.id.From);
+		
+		
+		String destination = dest.getText().toString();
+		String originId = idList.get(origin.getSelectedItemPosition());
+		String when = Integer.toString(leave.getSelectedItemPosition());
+		String time = 	Calendar.getInstance().get(Calendar.YEAR) + "+" + 
+						(Calendar.getInstance().get(Calendar.MONTH) + 1) + "+" + 
+						Calendar.getInstance().get(Calendar.DATE) + "+" +
+						timeP.getCurrentHour() + "%3A" + timeP.getCurrentMinute();
+		
+		
 		routeIntent = new Intent(this, TravelRoutes.class);
+		routeIntent.putExtra(E_DESTINATION, destination);
+		routeIntent.putExtra(ORIGIN_ID, originId);
+		routeIntent.putExtra(LEAVE_WHEN, when);
+		routeIntent.putExtra(DATE_TIME, time);
+		
 		startActivity(routeIntent);
 	}
 	

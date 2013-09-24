@@ -309,6 +309,7 @@ containing a value of this type.
         public static final int common_signin_button_text_long=0x7f06000e;
         public static final int depart_button_text=0x7f06001d;
         public static final int depart_now_hint=0x7f06001c;
+        public static final int error=0x7f060027;
         public static final int from=0x7f060018;
         public static final int hello_world=0x7f060017;
         public static final int hint_from=0x7f06001a;

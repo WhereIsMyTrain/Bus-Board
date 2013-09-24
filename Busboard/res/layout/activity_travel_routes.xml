@@ -24,6 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/travel_routes"
         android:layout_toRightOf="@+id/travel_routes"
-        android:text="error" />
+        android:text="@string/error" />
 
 </RelativeLayout>
