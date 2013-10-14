@@ -65,20 +65,19 @@ public class HomeScreen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_screen);
-		
 		addLis();
 		leaveArriveSpinner();
 		
 		//starts up the location listener which updates the variable userLocation
-		getUserLocation();
+		//getUserLocation();
 		
-		if (userLocation != null) {
+		/*if (userLocation != null) {
 			try {
 				bindNearbyStops(userLocation);
 			} catch (NullPointerException e) {
 			} catch (JSONException e) {
 			}
-		}
+		}*/
 	}
 
 	@Override
@@ -90,9 +89,11 @@ public class HomeScreen extends Activity {
 	}
 	
 	public void addLis() {
+
 		AutoCompleteTextView to = (AutoCompleteTextView) findViewById(R.id.To);
+		AutoCompleteTextView from = (AutoCompleteTextView) findViewById(R.id.From);
 		to.addTextChangedListener(new TextWatcher(){
-	       
+	     
 	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 	        public void onTextChanged(CharSequence s, int start, int before, int count){
 	        	Object[] locNames = null;
@@ -106,6 +107,37 @@ public class HomeScreen extends Activity {
 		        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, locNames);
 
 		        	to.setAdapter(adapter);
+				} catch (NullPointerException e) {
+					Toast.makeText(getApplicationContext(), 
+							e.toString(), Toast.LENGTH_LONG).show();
+				} catch (JSONException e) {
+					Toast.makeText(getApplicationContext(), 
+							e.toString(), Toast.LENGTH_LONG).show();
+				} catch (Exception e) {
+					Toast.makeText(getApplicationContext(), 
+							e.toString(), Toast.LENGTH_LONG).show();
+				}
+	        }
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+	    });
+		
+		from.addTextChangedListener(new TextWatcher(){
+		     
+	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+	        public void onTextChanged(CharSequence s, int start, int before, int count){
+	        	Object[] locNames = null;
+	        	try {
+	        		
+					locNames = resolveLocationDesc(s.toString());
+					
+					AutoCompleteTextView from = (AutoCompleteTextView) findViewById(R.id.From);
+		        	ArrayAdapter<Object> adapter = 
+		        			new ArrayAdapter<Object>(
+		        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, locNames);
+
+		        	from.setAdapter(adapter);
 				} catch (NullPointerException e) {
 					Toast.makeText(getApplicationContext(), 
 							e.toString(), Toast.LENGTH_LONG).show();
@@ -171,9 +203,6 @@ public static Object[] resolveLocationId(String input) throws NullPointerExcepti
 		resolved = places.toArray();
 		return resolved;
 	}
-	
-	
-	
 	
 	
 	public void bindNearbyStops(Location location) throws NullPointerException, JSONException{
@@ -277,11 +306,12 @@ public static Object[] resolveLocationId(String input) throws NullPointerExcepti
 		EditText dest = (EditText)findViewById(R.id.To);
 		Spinner leave = (Spinner)findViewById(R.id.timeSpinner);
 		TimePicker timeP = (TimePicker)findViewById(R.id.timePicker1);
-		Spinner origin = (Spinner)findViewById(R.id.From);
+		EditText origin = (EditText)findViewById(R.id.From);
 		
 		
 		String destination = dest.getText().toString();
-		String originId = idList.get(origin.getSelectedItemPosition());
+		String originId = origin.getText().toString();
+		//String originId = idList.get(origin.getSelectedItemPosition());
 		String when = Integer.toString(leave.getSelectedItemPosition());
 		String time = 	Calendar.getInstance().get(Calendar.YEAR) + "+" + 
 						(Calendar.getInstance().get(Calendar.MONTH) + 1) + "+" + 

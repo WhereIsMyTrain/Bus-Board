@@ -43,10 +43,13 @@ public class TravelRoutes extends Activity {
 		
 		//need to pass the dest through resolveLocationId to get Id
 		String destId = null;
+		String originId = null;
 		
-		Object[] locs = null;
+		Object[] toLocs = null;
+		Object[] fromLocs = null;
 		try {
-			locs = HomeScreen.resolveLocationId(dest);
+			toLocs = HomeScreen.resolveLocationId(dest);
+			fromLocs = HomeScreen.resolveLocationId(originStopId);
 		} catch (NullPointerException e1) {
 			Toast.makeText(getApplicationContext(), 
 					e1.toString(), Toast.LENGTH_LONG).show();
@@ -58,19 +61,16 @@ public class TravelRoutes extends Activity {
 		
 		//take the first entry
 		View view = new View(getApplicationContext());
-		if (locs.length > 0)
-			destId = (String) locs[0];
+		if (toLocs.length > 0 && fromLocs.length > 0) {
+			destId = (String) toLocs[0];
+			originId = (String) fromLocs[0];
+		}
 		else 
 			home(view);
 		
 		
 
-		String dest0 = destId.replace(' ', '+');
-		String dest1 = dest0.replace(":", "%3A");
-		TextView textView = new TextView(this);
-	    textView.setTextSize(40);
-	    textView.setText("Received: " + originStopId + "\n" + dest1 + "\n" + dateTime + "\n"
-				+ leave);
+		
 	    //setContentView(textView);
 
 
@@ -82,8 +82,19 @@ public class TravelRoutes extends Activity {
 			retrieveTravelRoutes(originStopId, destId, dateTime, leave);
 			
 		} catch (Exception e) {
+			String dest0 = destId.replace(' ', '+');
+			String dest1 = dest0.replace(":", "%3A");
+
+			String orig0 = originId.replace(' ', '+');
+			String orig1 = orig0.replace(":", "%3A");
+
 			Toast.makeText(getApplicationContext(), 
-                    e.toString(), Toast.LENGTH_LONG).show();
+					"Received: " + orig1 + "\n" + dest1 + "\n" + dateTime + "\n"
+							+ leave, Toast.LENGTH_LONG).show();
+			/*TextView textView = new TextView(this);
+		    textView.setTextSize(40);
+		    textView.setText("Received: " + orig1 + "\n" + dest1 + "\n" + dateTime + "\n"
+					+ leave);*/
 		}
 	}
 
@@ -99,10 +110,13 @@ public class TravelRoutes extends Activity {
 		String originId = "001841";
 		String dest = destStopId.replace(" ", "%20");
 		String dest1 = dest.replace(":", "%3A");
+
+		String orig0 = originStopId.replace(" ", "%20");
+		String orig1 = orig0.replace(":", "%3A");
 		//String date = "2013+09+29+18%3A00";
 
 		String url = 
-				"http://deco3801-003.uqcloud.net/opia/travel/rest/plan/SI%3A" + originStopId +
+				"http://deco3801-003.uqcloud.net/opia/travel/rest/plan/" + orig1 +
 				"/" + dest1 + "?timeMode=" + leave + "&at=" + dateTime + "&" +
 				"walkSpeed=1&maximumWalkingDistanceM=500&" +
 				"serviceTypes=1&fareTypes=2&api_key=special-key";
