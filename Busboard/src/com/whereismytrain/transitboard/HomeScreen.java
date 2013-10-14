@@ -34,29 +34,76 @@ public class HomeScreen extends Activity {
 	private static List<String> locations = new ArrayList<String>();
 	public Location userLocation;
 	private Intent routeIntent;
+	
+	LocationListener locationListener = new LocationListener() {
+	    public void onLocationChanged(Location location) {
+	      // Called when a new location is found by the network location provider.
+	    	userLocation = location;
+	 
+		    Toast.makeText(getApplicationContext(), userLocation.getLatitude() + 
+		  		  ", " + userLocation.getLongitude() , Toast.LENGTH_LONG).show();
+		    try {
+				bindNearbyStops(userLocation);
+			} catch (NullPointerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    }
+
+	    public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+	    public void onProviderEnabled(String provider) {}
+
+	    public void onProviderDisabled(String provider) {}
+	  };
+	  
+	  
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home_screen);
 		
-		AutoCompleteTextView to = (AutoCompleteTextView) findViewById(R.id.To);
+		addLis();
+		leaveArriveSpinner();
 		
+		//starts up the location listener which updates the variable userLocation
+		getUserLocation();
+		
+		if (userLocation != null) {
+			try {
+				bindNearbyStops(userLocation);
+			} catch (NullPointerException e) {
+			} catch (JSONException e) {
+			}
+		}
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.home_screen, menu);
+		return true;
+		
+	}
+	
+	public void addLis() {
+		AutoCompleteTextView to = (AutoCompleteTextView) findViewById(R.id.To);
 		to.addTextChangedListener(new TextWatcher(){
 	       
 	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 	        public void onTextChanged(CharSequence s, int start, int before, int count){
-	        	Object[] locs = null;
+	        	Object[] locNames = null;
 	        	try {
-	        		List<String> names = new ArrayList<String>();
-					locs = resolveLocation(s.toString());
-					for (int i = 0; i < locs.length; i++) {
-						names.add(((String[])locs[i])[0]);
-					}
+	        		
+					locNames = resolveLocationDesc(s.toString());
 					
 					AutoCompleteTextView to = (AutoCompleteTextView) findViewById(R.id.To);
-		        	ArrayAdapter<String> adapter = 
-		        			new ArrayAdapter<String>(
-		        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, names);
+		        	ArrayAdapter<Object> adapter = 
+		        			new ArrayAdapter<Object>(
+		        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, locNames);
 
 		        	to.setAdapter(adapter);
 				} catch (NullPointerException e) {
@@ -69,43 +116,11 @@ public class HomeScreen extends Activity {
 					Toast.makeText(getApplicationContext(), 
 							e.toString(), Toast.LENGTH_LONG).show();
 				}
-	        	
-					
-		
-	        	
 	        }
 			@Override
 			public void afterTextChanged(Editable s) {
-			
-				
 			}
 	    });
-		
-		
-		//
-		//starts up the location listener which updates the variable userLocation
-		getUserLocation();
-		
-		if (userLocation != null) {
-			try {
-				bindNearbyStops(userLocation);
-			} catch (NullPointerException e) {
-			} catch (JSONException e) {
-			}
-		}
-		
-		leaveArriveSpinner();
-		
-		
-
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.home_screen, menu);
-		return true;
-		
 	}
 	
 	public void leaveArriveSpinner() {
@@ -119,11 +134,12 @@ public class HomeScreen extends Activity {
 		time.setAdapter(adapterTime);
 		
 	}
-	public Object[] resolveLocation(String input) throws NullPointerException, JSONException {
+	public static Object[] resolveLocationDesc(String input) throws NullPointerException, JSONException {
+		//returns an array of descriptions
 		
 		String format = input.replace(' ', '+');
 		Object[] resolved = null;
-		List<String[]> places = new ArrayList<String[]>();
+		List<String> places = new ArrayList<String>();
 		Jsonp jParser = new Jsonp();
 		String url = "http://deco3801-003.uqcloud.net/opia/location/rest/resolve?" +
 				"input=" + format + "&filter=0&maxResults=20&api_key=special-key";
@@ -131,11 +147,26 @@ public class HomeScreen extends Activity {
 		JSONObject json = jParser.getJSONFromUrl(url);
 		JSONArray locations = json.getJSONArray("Locations");
 		for (int i = 0; i <locations.length(); i++) {
-			String[] location = new String[2];
 			JSONObject l = locations.getJSONObject(i);
-			location[0] = l.getString("Description");
-			location[1] = l.getString("Id");
-			places.add(location);
+			places.add(l.getString("Description"));
+		}
+		resolved = places.toArray();
+		return resolved;
+	}
+public static Object[] resolveLocationId(String input) throws NullPointerException, JSONException {
+		//returns an array of ids
+		String format = input.replace(' ', '+');
+		Object[] resolved = null;
+		List<String> places = new ArrayList<String>();
+		Jsonp jParser = new Jsonp();
+		String url = "http://deco3801-003.uqcloud.net/opia/location/rest/resolve?" +
+				"input=" + format + "&filter=0&maxResults=20&api_key=special-key";
+		//http://deco3801-003.uqcloud.net/opia/location/rest/resolve?input=Milton&filter=0&maxResults=20&api_key=special-key"
+		JSONObject json = jParser.getJSONFromUrl(url);
+		JSONArray locations = json.getJSONArray("Locations");
+		for (int i = 0; i <locations.length(); i++) {
+			JSONObject l = locations.getJSONObject(i);
+			places.add(l.getString("Id"));
 		}
 		resolved = places.toArray();
 		return resolved;
@@ -200,7 +231,11 @@ public class HomeScreen extends Activity {
 		}
 	}
 	
-	
+	public void retrieveCurrentLocation(Location location) {
+		String latitude = String.valueOf(location.getLatitude());
+		String longitude = String.valueOf(location.getLongitude());
+		
+	}
 
 	public void getUserLocation() {
 		Boolean isGPSEnabled;
@@ -220,32 +255,12 @@ public class HomeScreen extends Activity {
 	
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 10, locationListener);
 				
-		if (userLocation != null){}
+		if (userLocation != null){
+			locationManager.removeUpdates(locationListener);
+		}
 		
 	}
-	LocationListener locationListener = new LocationListener() {
-	    public void onLocationChanged(Location location) {
-	      // Called when a new location is found by the network location provider.
-	    	userLocation = location; 
-		    /*Toast.makeText(getApplicationContext(), userLocation.getLatitude() + 
-		  		  ", " + userLocation.getLongitude() , Toast.LENGTH_LONG).show();*/
-		    try {
-				bindNearbyStops(userLocation);
-			} catch (NullPointerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	    }
-
-	    public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-	    public void onProviderEnabled(String provider) {}
-
-	    public void onProviderDisabled(String provider) {}
-	  };
+	
 	//open map
 	public void mapScreen(View view) {
 		Intent i = new Intent(this, Map.class);

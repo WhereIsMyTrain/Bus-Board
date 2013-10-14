@@ -69,6 +69,10 @@
             android:name="com.whereismytrain.transitboard.Nearby"
             android:label="@string/title_activity_nearby" >
         </activity>
+        <activity
+            android:name="com.whereismytrain.transitboard.TravelRoutes"
+            android:label="@string/title_activity_travel_routes" >
+        </activity>
     </application>
 
 </manifest>

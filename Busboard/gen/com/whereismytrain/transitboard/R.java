@@ -183,27 +183,29 @@ containing a value of this type.
         public static final int transitboard=0x7f020019;
     }
     public static final class id {
-        public static final int From=0x7f050006;
-        public static final int Or=0x7f05000a;
-        public static final int TextView01=0x7f050013;
-        public static final int To=0x7f050007;
-        public static final int action_settings=0x7f050014;
-        public static final int button1=0x7f050008;
-        public static final int calendarView1=0x7f05000f;
-        public static final int directions=0x7f050005;
-        public static final int error=0x7f050012;
+        public static final int DirectionsScroll=0x7f050005;
+        public static final int From=0x7f050007;
+        public static final int Or=0x7f05000b;
+        public static final int ScrollView01=0x7f050012;
+        public static final int TextView01=0x7f050015;
+        public static final int To=0x7f050008;
+        public static final int action_settings=0x7f050016;
+        public static final int button1=0x7f050009;
+        public static final int calendarView1=0x7f050010;
+        public static final int directions=0x7f050006;
+        public static final int error=0x7f050014;
         public static final int hybrid=0x7f050004;
-        public static final int listView1=0x7f050010;
-        public static final int location=0x7f05000d;
-        public static final int map=0x7f05000e;
-        public static final int nearby=0x7f050009;
+        public static final int listView1=0x7f050011;
+        public static final int location=0x7f05000e;
+        public static final int map=0x7f05000f;
+        public static final int nearby=0x7f05000a;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
         public static final int satellite=0x7f050002;
         public static final int terrain=0x7f050003;
-        public static final int timePicker1=0x7f05000c;
-        public static final int timeSpinner=0x7f05000b;
-        public static final int travel_routes=0x7f050011;
+        public static final int timePicker1=0x7f05000d;
+        public static final int timeSpinner=0x7f05000c;
+        public static final int travel_routes=0x7f050013;
     }
     public static final class layout {
         public static final int activity_directions=0x7f030000;

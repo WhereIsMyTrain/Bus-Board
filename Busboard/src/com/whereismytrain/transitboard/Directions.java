@@ -1,7 +1,14 @@
 package com.whereismytrain.transitboard;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.whereismytrain.transitboard.R;
 
@@ -11,8 +18,11 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class Directions extends Activity {
 
@@ -20,21 +30,52 @@ public class Directions extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_directions);
-		//JSON stub here
-		//hardcoded directions
-		ListView directions = (ListView)findViewById(R.id.directions);
-		List<String> list = new ArrayList<String>();
-		list.add("Walk 315m to UQ Chancellor's Place, zone D");
-		list.add("Catch express bus to Benson St at Toowong, stop 14 ");
-		list.add("Walk 153m to Toowong station, platform 2");
-		list.add("Catch train to Milton station");
-		//fill the listview
-		ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, list);
-		arrayAdapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-		directions.setAdapter(arrayAdapter);
+		Intent intent = getIntent();
+		
+		String route = "null";
+		try {
+			route = intent.getStringExtra(TravelRoutes.ROUTE);
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(), e.toString()
+					, Toast.LENGTH_LONG).show();
+		}
+		
+		try {
+			displayDirections(route);
+		} catch (Exception e) {
+			Toast.makeText(getApplicationContext(), e.toString()
+					, Toast.LENGTH_LONG).show();
+		}
+		
+	}
+	
+	public void displayDirections(String directions) throws JSONException{
+		JSONObject itin = new JSONObject(directions);
+		JSONArray legs = itin.getJSONArray("Legs");
+		LinearLayout masterLayout = (LinearLayout) findViewById(R.id.directions);
+		Long date = System.currentTimeMillis();
+		for (int j=0; j < legs.length(); j++) {
+			
+			LinearLayout lineDir = new LinearLayout(this);
+			JSONObject inst = legs.getJSONObject(j);
+			String depTime = inst.getString("DepartureTime");
+			String timeRem = timeRemaining(depTime, date);
+			TextView dir = new TextView(this);
+			dir.setText("Leg " + (j + 1) + ": Departs in " + timeRem + 
+					". " + inst.getString("Instruction"));
+			lineDir.addView(dir);
+			masterLayout.addView(lineDir);
+		}
 	}
 
+	public String timeRemaining(String depDate, Long now) {
+		Long departure = Long.parseLong(depDate.substring(6,19));
+		Long difference = departure - now;
+		Date date = new Date(difference);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("mm");
+		return formatter.format(date);
+	}
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
