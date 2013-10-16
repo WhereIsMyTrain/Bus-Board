@@ -6,6 +6,8 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -34,7 +36,38 @@ public class HomeScreen extends Activity {
 	private static List<String> locations = new ArrayList<String>();
 	public Location userLocation;
 	private Intent routeIntent;
+	private Object[] toLocNames = null;
+	private Object[] fromLocNames = null;
 	
+	private Handler toHandler = new Handler() {
+		  @Override
+		  public void handleMessage(Message msg) {
+			  AutoCompleteTextView to = (AutoCompleteTextView) findViewById(R.id.To);
+	        	ArrayAdapter<Object> adapter = 
+	        			new ArrayAdapter<Object>(
+	        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, toLocNames);
+
+	        	to.setAdapter(adapter);
+			  //ProgressBar bar = (ProgressBar)findViewById(R.id.progressBar1);
+			  //bar.setVisibility(View.INVISIBLE);
+			  
+		     }
+		 };
+	 Handler fromHandler = new Handler() {
+		  @Override
+		  public void handleMessage(Message msg) {
+			  AutoCompleteTextView from = (AutoCompleteTextView) findViewById(R.id.From);
+	        	ArrayAdapter<Object> adapter = 
+	        			new ArrayAdapter<Object>(
+	        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, fromLocNames);
+
+	        	from.setAdapter(adapter);
+			  //ProgressBar bar = (ProgressBar)findViewById(R.id.progressBar1);
+			  //bar.setVisibility(View.INVISIBLE);
+			  
+		     }
+		 };
+		 
 	LocationListener locationListener = new LocationListener() {
 	    public void onLocationChanged(Location location) {
 	      // Called when a new location is found by the network location provider.
@@ -42,7 +75,11 @@ public class HomeScreen extends Activity {
 	 
 		    Toast.makeText(getApplicationContext(), userLocation.getLatitude() + 
 		  		  ", " + userLocation.getLongitude() , Toast.LENGTH_LONG).show();
-		    try {
+		    
+
+			EditText from = (EditText) findViewById(R.id.From);
+			//from.setText(location.getLongitude() + "," + location.getLatitude());
+		    /*try {
 				bindNearbyStops(userLocation);
 			} catch (NullPointerException e) {
 				// TODO Auto-generated catch block
@@ -50,7 +87,7 @@ public class HomeScreen extends Activity {
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}*/
 	    }
 
 	    public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -69,7 +106,7 @@ public class HomeScreen extends Activity {
 		leaveArriveSpinner();
 		
 		//starts up the location listener which updates the variable userLocation
-		//getUserLocation();
+		getUserLocation();
 		
 		/*if (userLocation != null) {
 			try {
@@ -87,36 +124,33 @@ public class HomeScreen extends Activity {
 		return true;
 		
 	}
-	
 	public void addLis() {
 
 		AutoCompleteTextView to = (AutoCompleteTextView) findViewById(R.id.To);
 		AutoCompleteTextView from = (AutoCompleteTextView) findViewById(R.id.From);
 		to.addTextChangedListener(new TextWatcher(){
+			public String st = "";
 	     
 	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 	        public void onTextChanged(CharSequence s, int start, int before, int count){
-	        	Object[] locNames = null;
-	        	try {
-	        		
-					locNames = resolveLocationDesc(s.toString());
-					
-					AutoCompleteTextView to = (AutoCompleteTextView) findViewById(R.id.To);
-		        	ArrayAdapter<Object> adapter = 
-		        			new ArrayAdapter<Object>(
-		        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, locNames);
-
-		        	to.setAdapter(adapter);
-				} catch (NullPointerException e) {
-					Toast.makeText(getApplicationContext(), 
-							e.toString(), Toast.LENGTH_LONG).show();
-				} catch (JSONException e) {
-					Toast.makeText(getApplicationContext(), 
-							e.toString(), Toast.LENGTH_LONG).show();
-				} catch (Exception e) {
-					Toast.makeText(getApplicationContext(), 
-							e.toString(), Toast.LENGTH_LONG).show();
-				}
+	        	
+	        	st = s.toString();
+	        	Runnable runnable = new Runnable() {
+	    	        public void run() {     	
+	    	        	synchronized (this) {
+	    		        	try {
+	    		        		toLocNames = resolveLocationDesc(st.toString());
+	    						
+	    					} catch (Exception e1) {
+	    						Toast.makeText(getApplicationContext(), e1.toString(), 
+	    								Toast.LENGTH_LONG).show();
+	    					}
+	    	        	}
+	    	        	toHandler.sendEmptyMessage(0);
+	    	        }
+	        	};
+	        	Thread mythread = new Thread(runnable);
+	        	mythread.start();
 	        }
 			@Override
 			public void afterTextChanged(Editable s) {
@@ -124,30 +158,26 @@ public class HomeScreen extends Activity {
 	    });
 		
 		from.addTextChangedListener(new TextWatcher(){
-		     
+			public String st = "";
 	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 	        public void onTextChanged(CharSequence s, int start, int before, int count){
-	        	Object[] locNames = null;
-	        	try {
-	        		
-					locNames = resolveLocationDesc(s.toString());
-					
-					AutoCompleteTextView from = (AutoCompleteTextView) findViewById(R.id.From);
-		        	ArrayAdapter<Object> adapter = 
-		        			new ArrayAdapter<Object>(
-		        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, locNames);
-
-		        	from.setAdapter(adapter);
-				} catch (NullPointerException e) {
-					Toast.makeText(getApplicationContext(), 
-							e.toString(), Toast.LENGTH_LONG).show();
-				} catch (JSONException e) {
-					Toast.makeText(getApplicationContext(), 
-							e.toString(), Toast.LENGTH_LONG).show();
-				} catch (Exception e) {
-					Toast.makeText(getApplicationContext(), 
-							e.toString(), Toast.LENGTH_LONG).show();
-				}
+	        	st = s.toString();
+	        	Runnable runnable = new Runnable() {
+	    	        public void run() {     	
+	    	        	synchronized (this) {
+	    		        	try {
+	    		        		fromLocNames = resolveLocationDesc(st.toString());
+	    						
+	    					} catch (Exception e1) {
+	    						Toast.makeText(getApplicationContext(), e1.toString(), 
+	    								Toast.LENGTH_LONG).show();
+	    					}
+	    	        	}
+	    	        	fromHandler.sendEmptyMessage(0);
+	    	        }
+	        	};
+	        	Thread mythread = new Thread(runnable);
+	        	mythread.start();
 	        }
 			@Override
 			public void afterTextChanged(Editable s) {

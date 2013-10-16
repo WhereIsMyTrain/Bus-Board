@@ -89,8 +89,7 @@ public class TravelRoutes extends Activity {
 			String orig1 = orig0.replace(":", "%3A");
 
 			Toast.makeText(getApplicationContext(), 
-					"Received: " + orig1 + "\n" + dest1 + "\n" + dateTime + "\n"
-							+ leave, Toast.LENGTH_LONG).show();
+					e.toString(), Toast.LENGTH_LONG).show();
 			/*TextView textView = new TextView(this);
 		    textView.setTextSize(40);
 		    textView.setText("Received: " + orig1 + "\n" + dest1 + "\n" + dateTime + "\n"
@@ -107,7 +106,6 @@ public class TravelRoutes extends Activity {
 	
 	public void retrieveTravelRoutes(String originStopId, String destStopId,
 			String dateTime, String leave) throws Exception{
-		String originId = "001841";
 		String dest = destStopId.replace(" ", "%20");
 		String dest1 = dest.replace(":", "%3A");
 
