@@ -39,6 +39,8 @@ public class HomeScreen extends Activity {
 	private Object[] toLocNames = null;
 	private Object[] fromLocNames = null;
 	
+	
+	
 	private Handler toHandler = new Handler() {
 		  @Override
 		  public void handleMessage(Message msg) {
@@ -53,7 +55,7 @@ public class HomeScreen extends Activity {
 			  
 		     }
 		 };
-	 Handler fromHandler = new Handler() {
+	private Handler fromHandler = new Handler() {
 		  @Override
 		  public void handleMessage(Message msg) {
 			  AutoCompleteTextView from = (AutoCompleteTextView) findViewById(R.id.From);
@@ -104,6 +106,7 @@ public class HomeScreen extends Activity {
 		setContentView(R.layout.activity_home_screen);
 		addLis();
 		leaveArriveSpinner();
+		
 		
 		//starts up the location listener which updates the variable userLocation
 		getUserLocation();
@@ -357,7 +360,13 @@ public static Object[] resolveLocationId(String input) throws NullPointerExcepti
 		
 		startActivity(routeIntent);
 	}
-	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+ 
+                	Toast.makeText(getApplicationContext(), "No Routes available" , Toast.LENGTH_LONG).show();
+          		    
+   
+   }
+
 	
 
 }
