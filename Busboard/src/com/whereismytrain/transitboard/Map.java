@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -45,6 +46,9 @@ public class Map extends FragmentActivity {
 		}
 		Location location = locationManager.getLastKnownLocation(provider);
 		if (location != null) {
+			float[] colors = { BitmapDescriptorFactory.HUE_BLUE,
+					BitmapDescriptorFactory.HUE_ORANGE,
+					BitmapDescriptorFactory.HUE_GREEN };
 			double latitude = location.getLatitude();
 			double longitude = location.getLongitude();
 			currentPos = new LatLng(latitude, longitude);
@@ -52,11 +56,15 @@ public class Map extends FragmentActivity {
 			List<Stop> stopLocations;
 			try {
 				stopLocations = nearbyStops(currentPos);
+
 				for (Stop stop : stopLocations) {
-					map.addMarker(new MarkerOptions().
-							position(stop.getLatLng()).
-							title(stop.getDescription()).
-							snippet("Zone: " + stop.getZone()));
+
+					map.addMarker(new MarkerOptions()
+							.position(stop.getLatLng())
+							.title(stop.getDescription())
+							.snippet("Zone: " + stop.getZone())
+							.icon(BitmapDescriptorFactory
+									.defaultMarker(colors[stop.getServiceType()])));
 				}
 			} catch (Exception e) {
 				Toast toast = Toast.makeText(getApplicationContext(),
@@ -72,7 +80,7 @@ public class Map extends FragmentActivity {
 		String url = "http://deco3801-003.uqcloud.net/opia/location/"
 				+ "rest/stops-nearby/GP:" + latLng.latitude + ",%20"
 				+ latLng.longitude + "?"
-				+ "radiusM=2000&useWalkingDistance=true&maxResults=20";
+				+ "radiusM=3000&useWalkingDistance=true&maxResults=25";
 		JSONObject json = jParser.getJSONFromUrl(url);
 		// Splits the JSON file in each individual stop
 		JSONArray stopsJSON = json.getJSONArray("NearbyStops");
@@ -93,8 +101,9 @@ public class Map extends FragmentActivity {
 			stops.get(i).setZone(stopDetail.getString("Zone"));
 			stops.get(i).setId(id);
 			JSONObject position = stopDetail.getJSONObject("Position");
-			stops.get(i).setLatLng(new LatLng(position.getDouble("Lat"), position
-					.getDouble("Lng")));
+			stops.get(i).setLatLng(
+					new LatLng(position.getDouble("Lat"), position
+							.getDouble("Lng")));
 			stops.get(i).setServiceType(stopDetail.getInt("ServiceType"));
 		}
 		return stops;
