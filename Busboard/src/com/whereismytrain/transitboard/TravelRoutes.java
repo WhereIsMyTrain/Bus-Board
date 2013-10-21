@@ -13,13 +13,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,73 +37,82 @@ public class TravelRoutes extends Activity {
 
 	public final static String ROUTE = "com.whereismytrain.transitboard.ROUTE";
 	public static String SINGLE_ROUTE = null;
+	String dest;
+	String destId = null;
+	String origin;
+	String originId = null;
+	String dateTime;
+	String leave;
+
+	JSONObject obj = null;
+	
+	//ProgressBar routeProgressBar = new ProgressBar(getApplicationContext());
+	
+	private Handler routeHandler = new Handler() {
+		  @Override
+		  public void handleMessage(Message msg) {
+			   try {
+				  bindTravelRoutes(obj);
+			  } catch (NullPointerException e) {
+				home(new View(getApplicationContext()));
+			  } catch (JSONException e) {
+				home(new View(getApplicationContext()));
+			  }
+			  //ProgressBar bar = (ProgressBar)findViewById(R.id.routesProgressBar);
+			  //bar.setVisibility(View.INVISIBLE);
+			  }
+		 };
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_travel_routes);		
 		Intent intent = getIntent();
 		
-		String originStopId = intent.getStringExtra(HomeScreen.ORIGIN_ID);
-		String leave = intent.getStringExtra(HomeScreen.LEAVE_WHEN);
-		String dateTime = intent.getStringExtra(HomeScreen.DATE_TIME);
-		String dest = intent.getStringExtra(HomeScreen.E_DESTINATION);
-
+		origin = intent.getStringExtra(HomeScreen.ORIGIN_ID);
+		leave = intent.getStringExtra(HomeScreen.LEAVE_WHEN);
+		dateTime = intent.getStringExtra(HomeScreen.DATE_TIME);
+		dest = intent.getStringExtra(HomeScreen.E_DESTINATION);
 		
+		Runnable routesRunnable = new Runnable() {
+	        public void run() {     	
+	        	synchronized (this) {
+	        		
+	        		try {
+	        			Object[] toLocs;
+	        			Object[] fromLocs;
+	        			String noRoutesError = "Sorry, no services available between\n" + dest + "and\n" + origin;
+	        			
+	        			//need to pass the dest and origin through resolveLocationId to get Id
+						toLocs = HomeScreen.resolveLocationId(dest);
+						fromLocs = HomeScreen.resolveLocationId(origin);
+						
+						//take the first entry or return to home page if location was not resolved
+						View view = new View(getApplicationContext());
+						if (toLocs.length > 0 && fromLocs.length > 0) {
+							destId = (String) toLocs[0];
+							originId = (String) fromLocs[0];
+						}
+						else 
+							home(view);
+						
+						obj = retrieveTravelRoutes(originId, destId, dateTime, leave);
+						
+					} catch (JSONException e) {
+						Toast.makeText(getApplicationContext(), 
+								e.toString(), Toast.LENGTH_LONG).show();
+					} catch (NullPointerException e) {
+						Toast.makeText(getApplicationContext(), 
+								e.toString(), Toast.LENGTH_LONG).show();
+					}
+	        	}
+	        	routeHandler.sendEmptyMessage(0);
+	        }
+    	};
+    	Thread mythread = new Thread(routesRunnable);
+    	mythread.start();
+    	
+    	
 		
-		//need to pass the dest through resolveLocationId to get Id
-		String destId = null;
-		String originId = null;
-		
-		Object[] toLocs = null;
-		Object[] fromLocs = null;
-		try {
-			toLocs = HomeScreen.resolveLocationId(dest);
-			fromLocs = HomeScreen.resolveLocationId(originStopId);
-		} catch (NullPointerException e1) {
-			Toast.makeText(getApplicationContext(), 
-					e1.toString(), Toast.LENGTH_LONG).show();
-		} catch (JSONException e1) {
-			Toast.makeText(getApplicationContext(), 
-					e1.toString(), Toast.LENGTH_LONG).show();
-		}
-		
-		
-		//take the first entry
-		View view = new View(getApplicationContext());
-		if (toLocs.length > 0 && fromLocs.length > 0) {
-			destId = (String) toLocs[0];
-			originId = (String) fromLocs[0];
-		}
-		else 
-			home(view);
-		
-		
-
-		
-	    //setContentView(textView);
-
-
-		/*Toast.makeText(getApplicationContext(), 
-				originStopId + "\n" + destId + "\n" + dateTime + "\n" + leave, 
-				Toast.LENGTH_LONG).show();*/
-		   
-		try {
-			retrieveTravelRoutes(originStopId, destId, dateTime, leave);
-			
-		} catch (Exception e) {
-			String dest0 = destId.replace(' ', '+');
-			String dest1 = dest0.replace(":", "%3A");
-
-			String orig0 = originId.replace(' ', '+');
-			String orig1 = orig0.replace(":", "%3A");
-
-			Toast.makeText(getApplicationContext(), 
-					e.toString(), Toast.LENGTH_LONG).show();
-			/*TextView textView = new TextView(this);
-		    textView.setTextSize(40);
-		    textView.setText("Received: " + orig1 + "\n" + dest1 + "\n" + dateTime + "\n"
-					+ leave);*/
-		}
 	}
 
 	@Override
@@ -104,29 +122,37 @@ public class TravelRoutes extends Activity {
 		return true;
 	}
 	
-	public void retrieveTravelRoutes(String originStopId, String destStopId,
-			String dateTime, String leave) throws Exception{
+	public JSONObject retrieveTravelRoutes(String originStopId, String destStopId,
+			String dateTime, String leave) throws JSONException, NullPointerException{
+		
+		
 		String dest = destStopId.replace(" ", "%20");
 		String dest1 = dest.replace(":", "%3A");
+		String dest2 = dest1.replace(",", "%2C");
 
 		String orig0 = originStopId.replace(" ", "%20");
 		String orig1 = orig0.replace(":", "%3A");
-		//String date = "2013+09+29+18%3A00";
+		String orig2 = orig1.replace(",", "%2C");
+		//String date = "2013+10+29+18%3A00";
 
 		String url = 
-				"http://deco3801-003.uqcloud.net/opia/travel/rest/plan/" + orig1 +
-				"/" + dest1 + "?timeMode=" + leave + "&at=" + dateTime + "&" +
+				"http://deco3801-003.uqcloud.net/opia/travel/rest/plan/" + orig2 +
+				"/" + dest2 + "?timeMode=" + leave + "&at=" + dateTime + "&" +
 				"walkSpeed=1&maximumWalkingDistanceM=500&" +
 				"serviceTypes=1&fareTypes=2&api_key=special-key";
 		
-		//String url = "http://deco3801-003.uqcloud.net/opia/travel/rest/plan/SI%3A001841/SI%3A002030?timeMode=3&at=2013+09+29+18%3A00&vehicleTypes=2&walkSpeed=1&maximumWalkingDistanceM=500&serviceTypes=1&fareTypes=2&api_key=special-key";
-		
+		//String url = http://deco3801-003.uqcloud.net/opia/travel/rest/plan/AD%3ARobin%20St%2C%20Coalfalls/LM%3ATrain%20Stations%3AMilton%20station?timeMode=3&at=2013+10+29+18%3A00&walkSpeed=1&maximumWalkingDistanceM=500&serviceTypes=1&api_key=special-key
 		Jsonp jParser = new Jsonp();
 		JSONObject obj = jParser.getJSONFromUrl(url);
+		return obj;
 		
-
+	}
+	public void bindTravelRoutes(JSONObject obj) throws JSONException, NullPointerException{
 		JSONObject travelOptions = obj.getJSONObject("TravelOptions");
 		JSONArray itin = travelOptions.getJSONArray("Itineraries");
+		if (itin.length() == 0)
+			home(new View(getApplicationContext()));
+		
 			for (int i = 0; i < itin.length(); i++) {
 				JSONObject it = itin.getJSONObject(i);
 				SINGLE_ROUTE = it.toString();
@@ -144,13 +170,25 @@ public class TravelRoutes extends Activity {
 				}
 	
 				LinearLayout masterLayout = (LinearLayout) findViewById(R.id.travel_routes);
-			 	LinearLayout lineOne = new LinearLayout(this);
-				TextView info = new TextView(this);
+			 	final LinearLayout lineOne = new LinearLayout(this);
+			 	ImageView image = new ImageView(getApplicationContext());
+			 	image.setImageResource(R.drawable.bus);
+			 	TextView info = new TextView(this);
 				info.setText("Duration: " + duration + " mins\n" + zonesCov + " zones covered\nDepart: " + 
 						depTime + " Take the " + code);
+				
+				LayoutParams params = new LayoutParams(
+						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+				info.setTextSize(15.0f);
+				info.setBackgroundColor(Color.LTGRAY);
+				params.setMargins(12, 12, 12, 12);
+				info.setLayoutParams(params);
+				
+				
 				info.setOnClickListener(new OnClickListener() {
 					@Override
 		            public void onClick(View viewIn) {
+						lineOne.setBackgroundColor(Color.DKGRAY);
 						try {
 							directions(viewIn, SINGLE_ROUTE);
 						} catch (Exception e) {
@@ -159,8 +197,8 @@ public class TravelRoutes extends Activity {
 							    
 						}
 		            }
-
 				});
+				lineOne.addView(image);
 				lineOne.addView(info);
 				masterLayout.addView(lineOne);
 				
@@ -177,10 +215,9 @@ public class TravelRoutes extends Activity {
 			}
 	}
 	
-	
 	public void home(View view) {
 		Intent i = new Intent(this, HomeScreen.class);
-		 startActivity(i);
+		startActivity(i);
 	}
 	
 	public void directions(View view, String route) throws Exception{

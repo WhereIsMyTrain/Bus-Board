@@ -32,13 +32,16 @@ public class Directions extends Activity {
 		setContentView(R.layout.activity_directions);
 		Intent intent = getIntent();
 		
-		String route = "null";
+		String route = null;
 		try {
 			route = intent.getStringExtra(TravelRoutes.ROUTE);
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(), e.toString()
 					, Toast.LENGTH_LONG).show();
 		}
+		
+		if (route == null)
+			home(new View(getApplicationContext()));
 		
 		try {
 			displayDirections(route);
@@ -49,6 +52,11 @@ public class Directions extends Activity {
 		
 	}
 	
+	public void home(View view) {
+		Intent i = new Intent(this, HomeScreen.class);
+		startActivity(i);
+	}
+
 	public void displayDirections(String directions) throws JSONException{
 		JSONObject itin = new JSONObject(directions);
 		JSONArray legs = itin.getJSONArray("Legs");

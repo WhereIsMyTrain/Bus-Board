@@ -169,6 +169,10 @@ containing a value of this type.
         public static int common_signin_btn_text_normal_light=0x7f020015;
         public static int common_signin_btn_text_pressed_dark=0x7f020016;
         public static int common_signin_btn_text_pressed_light=0x7f020017;
+        public static int ic_plusone_medium_off_client=0x7f020018;
+        public static int ic_plusone_small_off_client=0x7f020019;
+        public static int ic_plusone_standard_off_client=0x7f02001a;
+        public static int ic_plusone_tall_off_client=0x7f02001b;
     }
     public static final class id {
         public static int hybrid=0x7f040004;
@@ -181,26 +185,26 @@ containing a value of this type.
         /**   Title for notification shown when GooglePlayServices needs to be
         enabled for a application to work. [CHAR LIMIT=70] 
          */
-        public static int auth_client_needs_enabling_title=0x7f050010;
+        public static int auth_client_needs_enabling_title=0x7f050014;
         /**   Title for notification shown when GooglePlayServices needs to be
         installed for a application to work. [CHAR LIMIT=70] 
          */
-        public static int auth_client_needs_installation_title=0x7f050011;
+        public static int auth_client_needs_installation_title=0x7f050015;
         /**   Title for notification shown when GooglePlayServices needs to be
         udpated for a application to work. [CHAR LIMIT=70] 
          */
-        public static int auth_client_needs_update_title=0x7f050012;
+        public static int auth_client_needs_update_title=0x7f050016;
         /**   Title for notification shown when GooglePlayServices is unavailable [CHAR LIMIT=42] 
          */
-        public static int auth_client_play_services_err_notification_msg=0x7f050013;
+        public static int auth_client_play_services_err_notification_msg=0x7f050017;
         /**   Requested by string saying which app requested the notification. [CHAR LIMIT=42] 
          */
-        public static int auth_client_requested_by_msg=0x7f050014;
+        public static int auth_client_requested_by_msg=0x7f050018;
         /**   Title for notification shown when a bad version of GooglePlayServices
         has been installed and needs correction for an application to work.
         [CHAR LIMIT=70] 
          */
-        public static int auth_client_using_bad_version_title=0x7f05000f;
+        public static int auth_client_using_bad_version_title=0x7f050013;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=40] 
@@ -229,19 +233,31 @@ containing a value of this type.
         Google Play services (from Play Store) [CHAR LIMIT=40] 
          */
         public static int common_google_play_services_install_title=0x7f050000;
+        /**  Message in confirmation dialog informing the user that they provided an invalid account. [CHAR LIMIT=NONE] 
+         */
+        public static int common_google_play_services_invalid_account_text=0x7f05000c;
+        /**  Title of confirmation dialog informing the user that they provided an invalid account. [CHAR LIMIT=40] 
+         */
+        public static int common_google_play_services_invalid_account_title=0x7f05000b;
+        /**  Message in confirmation dialog informing the user that a network error occurred. [CHAR LIMIT=NONE] 
+         */
+        public static int common_google_play_services_network_error_text=0x7f05000a;
+        /**  Title of confirmation dialog informing the user that a network error occurred. [CHAR LIMIT=40] 
+         */
+        public static int common_google_play_services_network_error_title=0x7f050009;
         /**  Message in confirmation dialog informing user there is an unknown issue in Google Play
         services [CHAR LIMIT=NONE] 
          */
-        public static int common_google_play_services_unknown_issue=0x7f050009;
+        public static int common_google_play_services_unknown_issue=0x7f05000d;
         /**  Message in confirmation dialog informing user that Google Play services is not supported on their device [CHAR LIMIT=NONE] 
          */
-        public static int common_google_play_services_unsupported_text=0x7f05000b;
+        public static int common_google_play_services_unsupported_text=0x7f05000f;
         /**  Title of confirmation dialog informing user that Google Play services is not supported on their device [CHAR LIMIT=40] 
          */
-        public static int common_google_play_services_unsupported_title=0x7f05000a;
+        public static int common_google_play_services_unsupported_title=0x7f05000e;
         /**  Button in confirmation dialog for updating Google Play services [CHAR LIMIT=40] 
          */
-        public static int common_google_play_services_update_button=0x7f05000c;
+        public static int common_google_play_services_update_button=0x7f050010;
         /**  Message in confirmation dialog informing user that they need to update
         Google Play services (from Play Store) [CHAR LIMIT=NONE] 
          */
@@ -252,10 +268,10 @@ containing a value of this type.
         public static int common_google_play_services_update_title=0x7f050007;
         /**  Sign-in button text [CHAR LIMIT=15] 
          */
-        public static int common_signin_button_text=0x7f05000d;
+        public static int common_signin_button_text=0x7f050011;
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
-        public static int common_signin_button_text_long=0x7f05000e;
+        public static int common_signin_button_text_long=0x7f050012;
     }
     public static final class styleable {
         /** Attributes that can be used with a MapAttrs.
