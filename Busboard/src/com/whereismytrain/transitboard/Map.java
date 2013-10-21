@@ -29,11 +29,11 @@ public class Map extends FragmentActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		LatLng currentPos = null;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 		SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map);
+		LatLng currentPos = null;
 		map = fm.getMap();
 		map.setMyLocationEnabled(true);
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
