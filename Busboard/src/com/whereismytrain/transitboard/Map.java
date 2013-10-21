@@ -33,7 +33,6 @@ public class Map extends FragmentActivity {
 		setContentView(R.layout.activity_map);
 		SupportMapFragment fm = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map);
-		LatLng currentPos = null;
 		map = fm.getMap();
 		map.setMyLocationEnabled(true);
 		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -51,7 +50,7 @@ public class Map extends FragmentActivity {
 					BitmapDescriptorFactory.HUE_GREEN };
 			double latitude = location.getLatitude();
 			double longitude = location.getLongitude();
-			currentPos = new LatLng(latitude, longitude);
+			LatLng currentPos = new LatLng(latitude, longitude);
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, 15));
 			List<Stop> stopLocations;
 			try {
