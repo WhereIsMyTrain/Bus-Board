@@ -78,9 +78,7 @@ public class Map extends FragmentActivity {
 		// Splits the JSON file in each individual stop
 		JSONArray stopsJSON = json.getJSONArray("NearbyStops");
 		List<Stop> stops = new ArrayList<Stop>();
-		Stop curStop;
 		for (int i = 0; i < stopsJSON.length(); i++) {
-			curStop = new Stop();
 			stops.add(i, new Stop());
 			JSONObject c = stopsJSON.getJSONObject(i);
 			// Gets the StopId in the format 'XXXXXX'
@@ -91,14 +89,14 @@ public class Map extends FragmentActivity {
 			JSONObject stopDetail = stopDetails.getJSONArray("Stops")
 					.getJSONObject(0);
 			// Gets relevant details for each stop
-			curStop.setDescription(stopDetail.getString("Description"));
+			stops.get(i).setDescription(stopDetail.getString("Description"));
 			// String position = stopDetail.getString("Position");
-			curStop.setZone(stopDetail.getString("Zone"));
-			curStop.setId(id);
+			stops.get(i).setZone(stopDetail.getString("Zone"));
+			stops.get(i).setId(id);
 			JSONObject position = stopDetail.getJSONObject("Position");
-			curStop.setLatLng(new LatLng(position.getDouble("Lat"), position
+			stops.get(i).setLatLng(new LatLng(position.getDouble("Lat"), position
 					.getDouble("Lng")));
-			curStop.setServiceType(stopDetail.getInt("ServiceType"));
+			stops.get(i).setServiceType(stopDetail.getInt("ServiceType"));
 		}
 		return stops;
 	}
