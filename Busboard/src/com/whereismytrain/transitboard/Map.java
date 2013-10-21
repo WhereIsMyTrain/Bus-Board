@@ -48,6 +48,7 @@ public class Map extends FragmentActivity {
 			double latitude = location.getLatitude();
 			double longitude = location.getLongitude();
 			currentPos = new LatLng(latitude, longitude);
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, 15));
 			List<Stop> stopLocations;
 			try {
 				stopLocations = nearbyStops(currentPos);
@@ -64,8 +65,6 @@ public class Map extends FragmentActivity {
 			}
 
 		}
-		// Move the camera instantly to my position with a zoom of 15.
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, 15));
 	}
 
 	public List<Stop> nearbyStops(LatLng latLng) throws JSONException {
@@ -73,7 +72,7 @@ public class Map extends FragmentActivity {
 		String url = "http://deco3801-003.uqcloud.net/opia/location/"
 				+ "rest/stops-nearby/GP:" + latLng.latitude + ",%20"
 				+ latLng.longitude + "?"
-				+ "radiusM=500&useWalkingDistance=true&maxResults=20";
+				+ "radiusM=2000&useWalkingDistance=true&maxResults=20";
 		JSONObject json = jParser.getJSONFromUrl(url);
 		// Splits the JSON file in each individual stop
 		JSONArray stopsJSON = json.getJSONArray("NearbyStops");
