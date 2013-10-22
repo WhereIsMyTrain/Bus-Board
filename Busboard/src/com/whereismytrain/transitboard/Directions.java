@@ -18,11 +18,14 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout.LayoutParams;
 
 public class Directions extends Activity {
 
@@ -68,11 +71,51 @@ public class Directions extends Activity {
 			JSONObject inst = legs.getJSONObject(j);
 			String depTime = inst.getString("DepartureTime");
 			String timeRem = timeRemaining(depTime, date);
+			int tMode = inst.getInt("TravelMode");
+			
+			
+			ImageView image = new ImageView(getApplicationContext());
+			switch (tMode) {
+				case 2: image.setImageResource(R.drawable.bus);
+				break;
+				case 4: image.setImageResource(R.drawable.ferry);
+				break;
+				case 8: image.setImageResource(R.drawable.train);
+				break;
+				case 16: image.setImageResource(R.drawable.walk);
+				break;
+				}
+			
 			TextView dir = new TextView(this);
-			dir.setText("Leg " + (j + 1) + ": Departs in " + timeRem + 
-					". " + inst.getString("Instruction"));
+			TextView leg = new TextView(this);
+			
+			LayoutParams textParams = new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			textParams.setMargins(6, 0, 0, 0);
+			LayoutParams imageParams = new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			imageParams.setMargins(3, 20, 0, 0);
+			LayoutParams lineParams = new LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			lineParams.setMargins(0, 10, 0, 40);
+			
+			image.setLayoutParams(imageParams);
+			leg.setLayoutParams(imageParams);
+			dir.setLayoutParams(textParams);
+			
+			ImageView line = new ImageView(getApplicationContext());
+		 	line.setImageResource(R.drawable.line);
+		 	line.setScaleType(ScaleType.FIT_XY);
+			
+		 	leg.setTextSize(35);
+		 	leg.setText((j + 1) + ": ");
+			dir.setText(inst.getString("Instruction"));
+			dir.setPadding(0, 0, 0, 30);
+			
+			lineDir.addView(image);
+			lineDir.addView(leg);
 			lineDir.addView(dir);
+			lineDir.setLayoutParams(lineParams);
+			
 			masterLayout.addView(lineDir);
+			masterLayout.addView(line);
 		}
 	}
 
@@ -91,7 +134,7 @@ public class Directions extends Activity {
 		return true;
 	}
 	//open map screen
-	public void openMap(View view) {
+	public void mapScreen(View view) {
 		Intent i = new Intent(this, Map.class);
 		 startActivity(i);
 	}

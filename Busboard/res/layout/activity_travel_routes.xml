@@ -7,20 +7,42 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TravelRoutes" >
-	<ScrollView android:id="@+id/ScrollView01"
-		android:layout_width="fill_parent"
-		android:layout_height="fill_parent">
-		
 	
-	        
 	    <LinearLayout
 	        android:id="@+id/travel_routes"
-	        android:layout_width="wrap_content"
+	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical" >
 
 	        
 	    </LinearLayout>
-	</ScrollView>
+	    <LinearLayout
+	        android:orientation="vertical"
+	        android:layout_width="match_parent"
+    		android:layout_height="wrap_content"
+    		android:layout_alignParentBottom="true">
+
+	        <ImageView
+	    		android:id="@+id/imageView1"
+	    		android:contentDescription="line"
+	    		android:layout_width="match_parent"
+	    		android:layout_height="wrap_content"
+	   		 	android:src="@drawable/line" 
+	   		 	android:scaleType="fitXY"/>
+	            "
+	  		<TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="See Map" 
+	            android:textSize="25sp"
+	            android:onClick="mapScreen"
+	            android:fontFamily="monospace"
+	            android:clickable="true"
+	            android:layout_gravity="bottom"
+	            />
+	        
+</LinearLayout>
+	
 
 </RelativeLayout>

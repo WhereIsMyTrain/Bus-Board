@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -26,6 +28,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ProgressBar;
@@ -46,17 +49,15 @@ public class TravelRoutes extends Activity {
 
 	JSONObject obj = null;
 	
-	//ProgressBar routeProgressBar = new ProgressBar(getApplicationContext());
-	
 	private Handler routeHandler = new Handler() {
 		  @Override
 		  public void handleMessage(Message msg) {
 			   try {
 				  bindTravelRoutes(obj);
-			  } catch (NullPointerException e) {
-				home(new View(getApplicationContext()));
 			  } catch (JSONException e) {
-				home(new View(getApplicationContext()));
+				  showAlert();
+			  } catch (NullPointerException e) {
+				  showAlert();
 			  }
 			  //ProgressBar bar = (ProgressBar)findViewById(R.id.routesProgressBar);
 			  //bar.setVisibility(View.INVISIBLE);
@@ -68,10 +69,38 @@ public class TravelRoutes extends Activity {
 		setContentView(R.layout.activity_travel_routes);		
 		Intent intent = getIntent();
 		
+		
 		origin = intent.getStringExtra(HomeScreen.ORIGIN_ID);
 		leave = intent.getStringExtra(HomeScreen.LEAVE_WHEN);
 		dateTime = intent.getStringExtra(HomeScreen.DATE_TIME);
 		dest = intent.getStringExtra(HomeScreen.E_DESTINATION);
+		
+		try {
+		Object[] toLocs;
+		Object[] fromLocs;
+		
+		//need to pass the dest and origin through resolveLocationId to get Id
+		toLocs = HomeScreen.resolveLocationId(dest);
+		fromLocs = HomeScreen.resolveLocationId(origin);
+		
+		//take the first entry or return to home page if location was not resolved
+		View view = new View(getApplicationContext());
+		if (toLocs.length > 0 && fromLocs.length > 0) {
+			destId = (String) toLocs[0];
+			originId = (String) fromLocs[0];
+		}
+		else 
+			home(view);
+		
+		obj = retrieveTravelRoutes(originId, destId, dateTime, leave);
+		bindTravelRoutes(obj);
+		} catch (JSONException e) {
+			showAlert();
+			
+		} catch (NullPointerException e) {
+			showAlert();
+			
+		}
 		
 		Runnable routesRunnable = new Runnable() {
 	        public void run() {     	
@@ -80,7 +109,6 @@ public class TravelRoutes extends Activity {
 	        		try {
 	        			Object[] toLocs;
 	        			Object[] fromLocs;
-	        			String noRoutesError = "Sorry, no services available between\n" + dest + "and\n" + origin;
 	        			
 	        			//need to pass the dest and origin through resolveLocationId to get Id
 						toLocs = HomeScreen.resolveLocationId(dest);
@@ -97,20 +125,32 @@ public class TravelRoutes extends Activity {
 						
 						obj = retrieveTravelRoutes(originId, destId, dateTime, leave);
 						
+						Toast.makeText(getApplicationContext(), obj.toString(), Toast.LENGTH_LONG).show();
+						
+						
 					} catch (JSONException e) {
-						Toast.makeText(getApplicationContext(), 
-								e.toString(), Toast.LENGTH_LONG).show();
+						//showAlert();
+						Toast.makeText(getApplicationContext(), originId + "\n" +
+								destId + "\n" +
+								dateTime + "\n" +
+								leave, Toast.LENGTH_LONG).show();
+						
 					} catch (NullPointerException e) {
-						Toast.makeText(getApplicationContext(), 
-								e.toString(), Toast.LENGTH_LONG).show();
+						//showAlert();
+						Toast.makeText(getApplicationContext(), originId + "\n" +
+								destId + "\n" +
+								dateTime + "\n" +
+								leave, Toast.LENGTH_LONG).show();
+					} catch (Exception e) {
+						//showAlert();
 					}
 	        	}
 	        	routeHandler.sendEmptyMessage(0);
 	        }
     	};
     	Thread mythread = new Thread(routesRunnable);
-    	mythread.start();
-    	
+    	//mythread.start();
+ 
     	
 		
 	}
@@ -122,6 +162,32 @@ public class TravelRoutes extends Activity {
 		return true;
 	}
 	
+	private void showAlert() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				this);
+ 
+			// set title
+			alertDialogBuilder.setTitle("Sorry! No Services Available");
+ 
+			// set dialog message
+			alertDialogBuilder
+				.setMessage("Click 'Back' to start again")
+				.setCancelable(false)
+				.setPositiveButton("Back",new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int id) {
+						// if this button is clicked, close
+						// current activity
+						TravelRoutes.this.finish();
+					}
+				  }).setIcon(R.drawable.walk);
+ 
+				// create alert dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+ 
+				// show it
+				alertDialog.show();
+
+	}
 	public JSONObject retrieveTravelRoutes(String originStopId, String destStopId,
 			String dateTime, String leave) throws JSONException, NullPointerException{
 		
@@ -135,19 +201,17 @@ public class TravelRoutes extends Activity {
 		String orig2 = orig1.replace(",", "%2C");
 		//String date = "2013+10+29+18%3A00";
 
-		String url = 
-				"http://deco3801-003.uqcloud.net/opia/travel/rest/plan/" + orig2 +
+		String url = "http://deco3801-003.uqcloud.net/opia/travel/rest/plan/" + orig2 +
 				"/" + dest2 + "?timeMode=" + leave + "&at=" + dateTime + "&" +
-				"walkSpeed=1&maximumWalkingDistanceM=500&" +
-				"serviceTypes=1&fareTypes=2&api_key=special-key";
-		
-		//String url = http://deco3801-003.uqcloud.net/opia/travel/rest/plan/AD%3ARobin%20St%2C%20Coalfalls/LM%3ATrain%20Stations%3AMilton%20station?timeMode=3&at=2013+10+29+18%3A00&walkSpeed=1&maximumWalkingDistanceM=500&serviceTypes=1&api_key=special-key
+				"walkSpeed=1&maximumWalkingDistanceM=3000";
+		//Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
+		//String url = http://deco3801-003.uqcloud.net/opia/travel/rest/plan/GP%3A-27.4973000007%2C153.011340000000000/LM%3ATrain%20Stations%3AMilton%20station?timeMode=0&at=2013+10+29+18%3A00&walkSpeed=1&maximumWalkingDistanceM=500
 		Jsonp jParser = new Jsonp();
 		JSONObject obj = jParser.getJSONFromUrl(url);
 		return obj;
 		
 	}
-	public void bindTravelRoutes(JSONObject obj) throws JSONException, NullPointerException{
+	public void bindTravelRoutes(JSONObject obj) throws JSONException, NullPointerException {
 		JSONObject travelOptions = obj.getJSONObject("TravelOptions");
 		JSONArray itin = travelOptions.getJSONArray("Itineraries");
 		if (itin.length() == 0)
@@ -170,25 +234,32 @@ public class TravelRoutes extends Activity {
 				}
 	
 				LinearLayout masterLayout = (LinearLayout) findViewById(R.id.travel_routes);
-			 	final LinearLayout lineOne = new LinearLayout(this);
+			 	LinearLayout lineOne = new LinearLayout(this);
 			 	ImageView image = new ImageView(getApplicationContext());
+			 	ImageView line = new ImageView(getApplicationContext());
+			 	line.setImageResource(R.drawable.line);
 			 	image.setImageResource(R.drawable.bus);
+			 	
 			 	TextView info = new TextView(this);
 				info.setText("Duration: " + duration + " mins\n" + zonesCov + " zones covered\nDepart: " + 
-						depTime + " Take the " + code);
-				
-				LayoutParams params = new LayoutParams(
-						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+						depTime + "\nTake the " + code);
 				info.setTextSize(15.0f);
-				info.setBackgroundColor(Color.LTGRAY);
-				params.setMargins(12, 12, 12, 12);
-				info.setLayoutParams(params);
 				
+				LayoutParams textParams = new LayoutParams(
+						LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+				LayoutParams imageParams = new LayoutParams(
+						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+				
+				imageParams.setMargins(0, 30, 0, 0);
+				textParams.setMargins(12, 12, 12, 12);
+				
+				info.setLayoutParams(textParams);
+				image.setLayoutParams(imageParams);
+				line.setScaleType(ScaleType.FIT_XY);
 				
 				info.setOnClickListener(new OnClickListener() {
 					@Override
 		            public void onClick(View viewIn) {
-						lineOne.setBackgroundColor(Color.DKGRAY);
 						try {
 							directions(viewIn, SINGLE_ROUTE);
 						} catch (Exception e) {
@@ -201,17 +272,8 @@ public class TravelRoutes extends Activity {
 				lineOne.addView(image);
 				lineOne.addView(info);
 				masterLayout.addView(lineOne);
-				
-				String instructions ="";
-				/* for (int j=0; j < legs.length(); j++) {
-					
-					LinearLayout lineDir = new LinearLayout(this);
-					JSONObject inst = legs.getJSONObject(j);
-					TextView dir = new TextView(this);
-					dir.setText("Leg " + (j + 1) + ": " + inst.getString("Instruction"));
-					lineDir.addView(dir);
-					masterLayout.addView(lineDir);
-				} */
+				//masterLayout.addView(info);
+				masterLayout.addView(line);
 			}
 	}
 	
@@ -223,6 +285,11 @@ public class TravelRoutes extends Activity {
 	public void directions(View view, String route) throws Exception{
 		Intent i = new Intent(this, Directions.class);
 		i.putExtra(ROUTE, route);
+		startActivity(i);
+	}
+	
+	public void mapScreen(View view) {
+		Intent i = new Intent(this, Map.class);
 		startActivity(i);
 	}
 	

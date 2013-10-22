@@ -1,2 +1,0 @@
-1882,,UQ Lakes station,,-27.49805,153.018077,2,http://translink.com.au/stop/001882,,,
-1801,,"UQ Chancellor's Place, zone A",,-27.498448,153.011036,2,http://translink.com.au/stop/001801,,,

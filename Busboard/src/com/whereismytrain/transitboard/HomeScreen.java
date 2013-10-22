@@ -38,6 +38,8 @@ public class HomeScreen extends Activity {
 	private Intent routeIntent;
 	private Object[] toLocNames = null;
 	private Object[] fromLocNames = null;
+	LocationManager locationManager;
+			
 	
 	
 	
@@ -74,22 +76,10 @@ public class HomeScreen extends Activity {
 	    public void onLocationChanged(Location location) {
 	      // Called when a new location is found by the network location provider.
 	    	userLocation = location;
-	 
-		    Toast.makeText(getApplicationContext(), userLocation.getLatitude() + 
-		  		  ", " + userLocation.getLongitude() , Toast.LENGTH_LONG).show();
-		    
-
 			EditText from = (EditText) findViewById(R.id.From);
-			//from.setText(location.getLongitude() + "," + location.getLatitude());
-		    /*try {
-				bindNearbyStops(userLocation);
-			} catch (NullPointerException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
+			from.setText(location.getLatitude()  + ", " + location.getLongitude());
+			locationManager.removeUpdates(this);
+		    
 	    }
 
 	    public void onStatusChanged(String provider, int status, Bundle extras) {}
@@ -109,6 +99,7 @@ public class HomeScreen extends Activity {
 		
 		
 		//starts up the location listener which updates the variable userLocation
+		locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 		getUserLocation();
 		
 		/*if (userLocation != null) {
@@ -137,6 +128,7 @@ public class HomeScreen extends Activity {
 	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 	        public void onTextChanged(CharSequence s, int start, int before, int count){
 	        	
+	        	//Thread.currentThread().interrupt();
 	        	st = s.toString();
 	        	Runnable runnable = new Runnable() {
 	    	        public void run() {     	
@@ -164,6 +156,9 @@ public class HomeScreen extends Activity {
 			public String st = "";
 	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 	        public void onTextChanged(CharSequence s, int start, int before, int count){
+	        	
+	        	//Thread.currentThread().interrupt();
+	        	
 	        	st = s.toString();
 	        	Runnable runnable = new Runnable() {
 	    	        public void run() {     	
@@ -186,6 +181,7 @@ public class HomeScreen extends Activity {
 			public void afterTextChanged(Editable s) {
 			}
 	    });
+		
 	}
 	
 	public void leaveArriveSpinner() {
@@ -221,11 +217,12 @@ public class HomeScreen extends Activity {
 public static Object[] resolveLocationId(String input) throws NullPointerException, JSONException {
 		//returns an array of ids
 		String format = input.replace(' ', '+');
+		String format1 = format.replace(",", "%2C");
 		Object[] resolved = null;
 		List<String> places = new ArrayList<String>();
 		Jsonp jParser = new Jsonp();
 		String url = "http://deco3801-003.uqcloud.net/opia/location/rest/resolve?" +
-				"input=" + format + "&filter=0&maxResults=20&api_key=special-key";
+				"input=" + format1 + "&filter=0&maxResults=20";
 		//http://deco3801-003.uqcloud.net/opia/location/rest/resolve?input=Milton&filter=0&maxResults=20&api_key=special-key"
 		JSONObject json = jParser.getJSONFromUrl(url);
 		JSONArray locations = json.getJSONArray("Locations");
@@ -300,16 +297,6 @@ public static Object[] resolveLocationId(String input) throws NullPointerExcepti
 	}
 
 	public void getUserLocation() {
-		Boolean isGPSEnabled;
-		Boolean isNetworkEnabled;
-		//LatLng location;
-		LocationManager locationManager = 
-				(LocationManager)getSystemService(Context.LOCATION_SERVICE);
-		isGPSEnabled = locationManager
-                .isProviderEnabled(LocationManager.GPS_PROVIDER);
-		isNetworkEnabled = locationManager
-                .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-		
 		if (userLocation == null)
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 20000, 10, locationListener);
 		if (userLocation == null)
@@ -317,9 +304,6 @@ public static Object[] resolveLocationId(String input) throws NullPointerExcepti
 	
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 20000, 10, locationListener);
 				
-		if (userLocation != null){
-			locationManager.removeUpdates(locationListener);
-		}
 		
 	}
 	
@@ -333,6 +317,14 @@ public static Object[] resolveLocationId(String input) throws NullPointerExcepti
 		Intent i = new Intent(this, Nearby.class);
 		 startActivity(i);
 	}
+	
+	/*public void routes(View view) throws NullPointerException, JSONException {
+		EditText origin = (EditText)findViewById(R.id.From);
+		String originId = origin.getText().toString();
+		Object[] list = resolveLocationId(originId);
+		String originURL = (String)list[0];
+		Toast.makeText(getApplicationContext(), originId + "\n" + originURL, Toast.LENGTH_LONG).show();
+	}*/
 	
 	public void routes(View view) {
 		
