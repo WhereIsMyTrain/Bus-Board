@@ -93,12 +93,25 @@ public class TravelRoutes extends Activity {
 			home(view);
 		
 		obj = retrieveTravelRoutes(originId, destId, dateTime, leave);
-		bindTravelRoutes(obj);
+		
 		} catch (JSONException e) {
-			showAlert();
+			//showAlert();
+			Toast.makeText(getApplicationContext(), "retrieveTravelRoutes()" + e.toString(), Toast.LENGTH_LONG).show();
+			
 			
 		} catch (NullPointerException e) {
-			showAlert();
+			Toast.makeText(getApplicationContext(), "retrieveTravelRoutes()" + e.toString(), Toast.LENGTH_LONG).show();
+			//showAlert();
+			
+		}
+		
+		try {
+			bindTravelRoutes(obj);
+		} catch (NullPointerException e1) {
+			Toast.makeText(getApplicationContext(), "bindTravelRoutes()" + e1.toString(), Toast.LENGTH_LONG).show();
+			
+		} catch (JSONException e1) {
+			Toast.makeText(getApplicationContext(), "bindTravelRoutes()" + e1.toString(), Toast.LENGTH_LONG).show();
 			
 		}
 		
@@ -200,10 +213,15 @@ public class TravelRoutes extends Activity {
 		String orig1 = orig0.replace(":", "%3A");
 		String orig2 = orig1.replace(",", "%2C");
 		//String date = "2013+10+29+18%3A00";
-
+		//GP%3A-27.4973000007%2C153.011340000000000
+		/*String url = "http://deco3801-003.uqcloud.net/opia/travel/rest/plan/" +
+				"GP%3A-27.4973000007%2C153.011340000000000/" +
+				"LM%3ATrain%20Stations%3AMilton%20station?timeMode=3&at=2013+10+22+18%3A00&" +
+				"walkSpeed=1&maximumWalkingDistanceM=500";*/
+		
 		String url = "http://deco3801-003.uqcloud.net/opia/travel/rest/plan/" + orig2 +
 				"/" + dest2 + "?timeMode=" + leave + "&at=" + dateTime + "&" +
-				"walkSpeed=1&maximumWalkingDistanceM=3000";
+				"walkSpeed=1&maximumWalkingDistanceM=1500";
 		//Toast.makeText(getApplicationContext(), url, Toast.LENGTH_LONG).show();
 		//String url = http://deco3801-003.uqcloud.net/opia/travel/rest/plan/GP%3A-27.4973000007%2C153.011340000000000/LM%3ATrain%20Stations%3AMilton%20station?timeMode=0&at=2013+10+29+18%3A00&walkSpeed=1&maximumWalkingDistanceM=500
 		Jsonp jParser = new Jsonp();
@@ -227,11 +245,13 @@ public class TravelRoutes extends Activity {
 				String depTime = parseDate(depTimeRaw);
 				JSONArray legs = it.getJSONArray("Legs");
 				JSONObject firstLeg = legs.getJSONObject(0);
-				JSONObject firstLegRoute = firstLeg.getJSONObject("Route");
-				String code = "walk";
-				if (firstLegRoute != null) {
-					code = firstLegRoute.getString("Code");
-				}
+				JSONObject firstLegRoute;
+				String code = "";
+				if (!(firstLeg.isNull("Route"))) {
+					firstLegRoute = firstLeg.getJSONObject("Route");
+					code = "Take the " + firstLegRoute.getString("Code");
+				} else
+					code = "Take a walk!";
 	
 				LinearLayout masterLayout = (LinearLayout) findViewById(R.id.travel_routes);
 			 	LinearLayout lineOne = new LinearLayout(this);
@@ -242,7 +262,7 @@ public class TravelRoutes extends Activity {
 			 	
 			 	TextView info = new TextView(this);
 				info.setText("Duration: " + duration + " mins\n" + zonesCov + " zones covered\nDepart: " + 
-						depTime + "\nTake the " + code);
+						depTime + "\n" + code);
 				info.setTextSize(15.0f);
 				
 				LayoutParams textParams = new LayoutParams(
@@ -296,10 +316,10 @@ public class TravelRoutes extends Activity {
 	public String parseDate(String input) {
 		//JSON format is "/Date(1381322400000+1000)/"
 		Date date = new Date(Long.parseLong(input.substring(6,19)));
-		TimeZone timeZone = TimeZone.getTimeZone("GMT" + input.substring(19,24));
+		//TimeZone timeZone = TimeZone.getTimeZone("GMT" + input.substring(19,24));
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("EEE HH:mm zzz");
-		formatter.setTimeZone(timeZone);
+		SimpleDateFormat formatter = new SimpleDateFormat("EEE HH:mm");
+		//formatter.setTimeZone(timeZone);
 		return formatter.format(date);
 
 	}

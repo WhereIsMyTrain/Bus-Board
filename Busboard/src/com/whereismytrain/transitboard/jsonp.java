@@ -14,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.StrictMode;
+import android.widget.Toast;
  
 public class Jsonp {
  
@@ -44,6 +45,8 @@ public class Jsonp {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
             json = reader.readLine();
+            System.out.println(url);
+            System.out.println(json);
             reader.close();
             is.close();
         } catch (Exception e) {

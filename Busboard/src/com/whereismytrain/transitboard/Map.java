@@ -79,7 +79,7 @@ public class Map extends FragmentActivity {
 		String url = "http://deco3801-003.uqcloud.net/opia/location/"
 				+ "rest/stops-nearby/GP:" + latLng.latitude + ",%20"
 				+ latLng.longitude + "?"
-				+ "radiusM=3000&useWalkingDistance=true&maxResults=25";
+				+ "radiusM=1500&useWalkingDistance=true&maxResults=10";
 		JSONObject json = jParser.getJSONFromUrl(url);
 		// Splits the JSON file in each individual stop
 		JSONArray stopsJSON = json.getJSONArray("NearbyStops");
