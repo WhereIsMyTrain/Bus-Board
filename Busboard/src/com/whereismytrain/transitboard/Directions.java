@@ -36,12 +36,8 @@ public class Directions extends Activity {
 		Intent intent = getIntent();
 		
 		String route = null;
-		try {
-			route = intent.getStringExtra(TravelRoutes.ROUTE);
-		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), e.toString()
-					, Toast.LENGTH_LONG).show();
-		}
+		route = intent.getStringExtra(TravelRoutes.ROUTE);
+		
 		
 		if (route == null)
 			home(new View(getApplicationContext()));
@@ -49,8 +45,8 @@ public class Directions extends Activity {
 		try {
 			displayDirections(route);
 		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), e.toString()
-					, Toast.LENGTH_LONG).show();
+			home(new View(getApplicationContext()));
+			
 		}
 		
 	}
@@ -101,7 +97,7 @@ public class Directions extends Activity {
 			dir.setLayoutParams(textParams);
 			
 			ImageView line = new ImageView(getApplicationContext());
-		 	line.setImageResource(R.drawable.line);
+		 	line.setImageResource(R.drawable.line2);
 		 	line.setScaleType(ScaleType.FIT_XY);
 			
 		 	leg.setTextSize(35);

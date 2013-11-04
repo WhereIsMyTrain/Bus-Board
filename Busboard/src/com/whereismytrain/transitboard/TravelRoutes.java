@@ -90,29 +90,24 @@ public class TravelRoutes extends Activity {
 			originId = (String) fromLocs[0];
 		}
 		else 
-			home(view);
+			showAlert();
 		
 		obj = retrieveTravelRoutes(originId, destId, dateTime, leave);
 		
 		} catch (JSONException e) {
-			//showAlert();
-			Toast.makeText(getApplicationContext(), "retrieveTravelRoutes()" + e.toString(), Toast.LENGTH_LONG).show();
-			
+			showAlert();
 			
 		} catch (NullPointerException e) {
-			Toast.makeText(getApplicationContext(), "retrieveTravelRoutes()" + e.toString(), Toast.LENGTH_LONG).show();
-			//showAlert();
+			showAlert();
 			
 		}
 		
 		try {
 			bindTravelRoutes(obj);
 		} catch (NullPointerException e1) {
-			Toast.makeText(getApplicationContext(), "bindTravelRoutes()" + e1.toString(), Toast.LENGTH_LONG).show();
-			
+			showAlert();
 		} catch (JSONException e1) {
-			Toast.makeText(getApplicationContext(), "bindTravelRoutes()" + e1.toString(), Toast.LENGTH_LONG).show();
-			
+			showAlert();
 		}
 		
 		Runnable routesRunnable = new Runnable() {
@@ -233,7 +228,7 @@ public class TravelRoutes extends Activity {
 		JSONObject travelOptions = obj.getJSONObject("TravelOptions");
 		JSONArray itin = travelOptions.getJSONArray("Itineraries");
 		if (itin.length() == 0)
-			home(new View(getApplicationContext()));
+			showAlert();
 		
 			for (int i = 0; i < itin.length(); i++) {
 				JSONObject it = itin.getJSONObject(i);
@@ -245,24 +240,36 @@ public class TravelRoutes extends Activity {
 				String depTime = parseDate(depTimeRaw);
 				JSONArray legs = it.getJSONArray("Legs");
 				JSONObject firstLeg = legs.getJSONObject(0);
+				JSONObject secondLeg = null;
+				if (legs.length() > 1)
+					secondLeg = legs.getJSONObject(1);
 				JSONObject firstLegRoute;
+				JSONObject secondLegRoute = null;
 				String code = "";
+				String startingStop = "";
+				String startId = firstLeg.getString("ToStopId");
+				
 				if (!(firstLeg.isNull("Route"))) {
 					firstLegRoute = firstLeg.getJSONObject("Route");
 					code = "Take the " + firstLegRoute.getString("Code");
-				} else
-					code = "Take a walk!";
+				} else if (secondLeg != null && !(secondLeg.isNull("Route"))) {
+					secondLegRoute = secondLeg.getJSONObject("Route");
+					code = "Take the " + secondLegRoute.getString("Code");
+				} 
+				
+				startingStop = resolveStopId(startId);
+					
 	
 				LinearLayout masterLayout = (LinearLayout) findViewById(R.id.travel_routes);
 			 	LinearLayout lineOne = new LinearLayout(this);
 			 	ImageView image = new ImageView(getApplicationContext());
 			 	ImageView line = new ImageView(getApplicationContext());
-			 	line.setImageResource(R.drawable.line);
+			 	line.setImageResource(R.drawable.line2);
 			 	image.setImageResource(R.drawable.bus);
 			 	
 			 	TextView info = new TextView(this);
-				info.setText("Duration: " + duration + " mins\n" + zonesCov + " zones covered\nDepart: " + 
-						depTime + "\n" + code);
+				info.setText(code + "\n" + "From: " + startingStop + "\n" + "Leaves at: " + 
+					depTime +  "\n" + "Duration: " + duration + " mins\n" + zonesCov + " zones covered\n");
 				info.setTextSize(15.0f);
 				
 				LayoutParams textParams = new LayoutParams(
@@ -278,10 +285,11 @@ public class TravelRoutes extends Activity {
 				line.setScaleType(ScaleType.FIT_XY);
 				
 				info.setOnClickListener(new OnClickListener() {
+					String route = SINGLE_ROUTE;
 					@Override
 		            public void onClick(View viewIn) {
 						try {
-							directions(viewIn, SINGLE_ROUTE);
+							directions(viewIn, route);
 						} catch (Exception e) {
 							Toast.makeText(getApplicationContext(), e.toString()
 									, Toast.LENGTH_LONG).show();
@@ -318,7 +326,7 @@ public class TravelRoutes extends Activity {
 		Date date = new Date(Long.parseLong(input.substring(6,19)));
 		//TimeZone timeZone = TimeZone.getTimeZone("GMT" + input.substring(19,24));
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("EEE HH:mm");
+		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 		//formatter.setTimeZone(timeZone);
 		return formatter.format(date);
 
@@ -331,5 +339,15 @@ public class TravelRoutes extends Activity {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("mm");
 		return formatter.format(date);
+	}
+	
+	public String resolveStopId(String id) throws JSONException{
+		Jsonp jParser = new Jsonp();
+		String url = "http://deco3801-003.uqcloud.net/opia/location/rest/stops?ids=SI%3A" + id;
+		JSONObject stopObj = jParser.getJSONFromUrl(url);
+		
+		JSONObject stopDetail = stopObj.getJSONArray("Stops").getJSONObject(0);
+		String description = stopDetail.getString("Description");
+		return description;
 	}
 }

@@ -63,7 +63,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBW_mTmzD-zCiGFWGj5Tzgv_l6FqUG2jeA" />
+            android:value="AIzaSyCgvx_ELymC6YbJmwgXl_jKyQ8kTJbdSy4" />
 
         <activity
             android:name="com.whereismytrain.transitboard.Nearby"

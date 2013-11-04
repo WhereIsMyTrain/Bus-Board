@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,81 +8,81 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HomeScreen" >
-   
-    
-	<AutoCompleteTextView
-        android:id="@+id/From"
+
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:text=""
-        android:hint="@string/hint_from"
-        android:gravity="left"
-        android:layout_gravity="center"/>
+        android:layout_height="wrap_content"
+        android:background="@drawable/banner"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:text="Journey Plan"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffffff"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <AutoCompleteTextView
         android:id="@+id/To"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="8dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/From"
+        android:layout_below="@+id/From"
+        android:layout_marginTop="10dp"
         android:ems="10"
-        android:hint="@string/hint_to"
+        android:fontFamily="14sp"
         android:gravity="left"
-        android:layout_gravity="center"/>
+        android:hint="@string/hint_to"
+        android:textSize="18sp" 
+        android:textColor="#000000"/>
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_marginTop="18dp"
-        android:hint="@string/depart_now_hint"
-        android:text="@string/depart_button_text"
-        android:onClick="mapScreen"
-        android:textSize="12sp" 
-        android:gravity="center"
-        android:layout_gravity="center"/>
-
- <Button
-     android:id="@+id/nearby"
-     android:layout_width="wrap_content"
-     android:layout_height="38dp"
-     android:layout_gravity="center"
-     android:layout_marginTop="18dp"
-     android:gravity="center"
-     android:onClick="routes"
-     android:text="Begin"
-     android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/Or"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Or"
-        android:gravity="center"
-        android:layout_gravity="center" />
-
-    <Spinner
-        android:id="@+id/timeSpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="time" 
-        android:gravity="center"
-        android:layout_gravity="center"/>
 
     <TimePicker
         android:id="@+id/timePicker1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/location"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/history_label" 
-        android:gravity="center"
-        android:layout_gravity="center"/>"
+        android:layout_alignLeft="@+id/To"
+        android:layout_below="@+id/To"
+        android:layout_marginTop="59dp" />
 
-</LinearLayout>
+    <Spinner
+        android:id="@+id/timeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/timePicker1"
+        android:layout_below="@+id/To"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="time" />
+
+    <AutoCompleteTextView
+        android:id="@+id/From"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="23dp"
+        android:ems="10"
+        android:gravity="left"
+        android:hint="@string/hint_from" >
+
+        <requestFocus />
+    </AutoCompleteTextView>
+
+    <Button
+        android:id="@+id/nearby"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_below="@+id/timePicker1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/botton_selector"
+        android:gravity="center"
+        android:onClick="routes"
+        android:text="Begin"
+        android:textColor="#ffffff"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

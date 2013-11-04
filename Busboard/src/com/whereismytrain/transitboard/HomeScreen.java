@@ -33,7 +33,6 @@ public class HomeScreen extends Activity {
 	public final static String DATE_TIME = "com.whereismytrain.transitboard.DATE";
 	public final static String TEST = "com.whereismytrain.transitboard.TEST";
 	private static List<String> idList = new ArrayList<String>();
-	private static List<String> locations = new ArrayList<String>();
 	public Location userLocation;
 	private Intent routeIntent;
 	private Object[] toLocNames = null;
@@ -49,7 +48,7 @@ public class HomeScreen extends Activity {
 			  AutoCompleteTextView to = (AutoCompleteTextView) findViewById(R.id.To);
 	        	ArrayAdapter<Object> adapter = 
 	        			new ArrayAdapter<Object>(
-	        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, toLocNames);
+	        					getApplicationContext(), R.layout.customdropd, toLocNames);
 
 	        	to.setAdapter(adapter);
 			  //ProgressBar bar = (ProgressBar)findViewById(R.id.progressBar1);
@@ -58,12 +57,13 @@ public class HomeScreen extends Activity {
 		     }
 		 };
 	private Handler fromHandler = new Handler() {
+			//R.layout.customdropd
 		  @Override
 		  public void handleMessage(Message msg) {
 			  AutoCompleteTextView from = (AutoCompleteTextView) findViewById(R.id.From);
 	        	ArrayAdapter<Object> adapter = 
 	        			new ArrayAdapter<Object>(
-	        					getApplicationContext(), android.R.layout.simple_dropdown_item_1line, fromLocNames);
+	        					getApplicationContext(), R.layout.customdropd, fromLocNames);
 
 	        	from.setAdapter(adapter);
 			  //ProgressBar bar = (ProgressBar)findViewById(R.id.progressBar1);
@@ -137,11 +137,10 @@ public class HomeScreen extends Activity {
 	    		        		toLocNames = resolveLocationDesc(st.toString());
 	    						
 	    					} catch (Exception e1) {
-	    						Toast.makeText(getApplicationContext(), e1.toString(), 
-	    								Toast.LENGTH_LONG).show();
 	    					}
 	    	        	}
-	    	        	toHandler.sendEmptyMessage(0);
+	    	        	if (toLocNames != null)
+	    	        		toHandler.sendEmptyMessage(0);
 	    	        }
 	        	};
 	        	Thread mythread = new Thread(runnable);
@@ -167,11 +166,10 @@ public class HomeScreen extends Activity {
 	    		        		fromLocNames = resolveLocationDesc(st.toString());
 	    						
 	    					} catch (Exception e1) {
-	    						Toast.makeText(getApplicationContext(), e1.toString(), 
-	    								Toast.LENGTH_LONG).show();
 	    					}
 	    	        	}
-	    	        	fromHandler.sendEmptyMessage(0);
+	    	        	if (fromLocNames != null)
+	    	        		fromHandler.sendEmptyMessage(0);
 	    	        }
 	        	};
 	        	Thread mythread = new Thread(runnable);
@@ -291,8 +289,8 @@ public static Object[] resolveLocationId(String input) throws NullPointerExcepti
 	}
 	
 	public void retrieveCurrentLocation(Location location) {
-		String latitude = String.valueOf(location.getLatitude());
-		String longitude = String.valueOf(location.getLongitude());
+		//String latitude = String.valueOf(location.getLatitude());
+		//String longitude = String.valueOf(location.getLongitude());
 		
 	}
 
@@ -359,6 +357,7 @@ public static Object[] resolveLocationId(String input) throws NullPointerExcepti
    
    }
 
+	
 	
 
 }

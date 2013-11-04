@@ -30,17 +30,21 @@
 	   		 	android:src="@drawable/line" 
 	   		 	android:scaleType="fitXY"/>
 	            "
-	  		<TextView
-	            android:id="@+id/textView1"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:text="See Map" 
-	            android:textSize="25sp"
-	            android:onClick="mapScreen"
-	            android:fontFamily="monospace"
-	            android:clickable="true"
-	            android:layout_gravity="bottom"
-	            />
+	  		<Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_alignBaseline="@+id/nearby"
+        android:layout_alignBottom="@+id/nearby"
+        android:layout_toLeftOf="@+id/nearby"
+		android:background="@drawable/botton_selector"
+		android:textColor="#ffffff"
+		android:textStyle="bold"
+        android:gravity="center"
+        android:hint="@string/depart_now_hint"
+        android:onClick="mapScreen"
+        android:text="Map"
+        android:textSize="12sp" />
 	        
 </LinearLayout>
 	
